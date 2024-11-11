@@ -31,4 +31,4 @@ connectToDatabase(ATLAS_URI)
       console.log(`Server running at http://localhost:`, app.get('port'));
     });
   })
-  .catch((error) => console.error(error));
+  .catch((error: unknown) => console.error(error));
