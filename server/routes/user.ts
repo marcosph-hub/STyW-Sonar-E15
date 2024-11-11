@@ -21,4 +21,9 @@ router.put("/:id", async (req: Request, res: Response) => {
 
 });
 
+router.delete("/:id", async (req: Request, res: Response) => {
+
+});
+
+
 module.exports = router;
