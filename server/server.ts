@@ -1,34 +1,39 @@
-import * as dotenv from "dotenv";
-import express from "express";
-import cors from "cors";
-import { connectToDatabase } from "./database";
+import express, { Request, Response } from 'express';
+const morgan = require("morgan");
+const mongoose = require('mongoose');
+import dotenv from 'dotenv';
 
-const { ATLAS_URI } = process.env;
-const app = express();
-
-// Settings 
+// Cargar las variables de entorno
 dotenv.config();
-app.set('port', process.env.PORT || 5200);
 
-// Middleware
+const app = express();
+const mongoURI = process.env.ATLAS_URI;
+app.use(morgan("dev"));
 
-// Routes
 
-if (!ATLAS_URI) {
-  console.error(
-    "No ATLAS_URI environment variable has been defined in config.env"
-  );
-  process.exit(1);
+if (!mongoURI) {
+  console.error('La URI de MongoDB no está definida.');
+} else {
+  console.log('Conectando a MongoDB:', mongoURI);
 }
 
-connectToDatabase(ATLAS_URI)
+mongoose.connect(mongoURI)
   .then(() => {
-    // const app = express();
-    app.use(cors());
-
-    // start the Express server
-    app.listen(app.get('port'), () => {
-      console.log(`Server running at http://localhost:`, app.get('port'));
-    });
+    console.log('Conectado a MongoDB Atlas exitosamente');
   })
-  .catch((error: unknown) => console.error(error));
+  .catch((error: unknown) => {
+    console.error('Error al conectar a MongoDB:', error);
+  });
+// Settings
+
+app.set("port", process.env.PORT || 5300);
+
+// Middleware
+app.use(express.json()); // para interpretar json
+
+// Routes
+app.use('/user',require("./routes/user"));
+
+app.listen(app.get("port"), () => {
+  console.log(`Server running at http://localhost:`, app.get("port"));
+});
