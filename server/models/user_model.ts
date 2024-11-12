@@ -1,6 +1,3 @@
-// const mongoose = require('mongoose');
-// const { Schema } = mongoose;
-
 import mongoose, { Schema, Document } from 'mongoose';
 
 interface UserInterface extends Document {
@@ -35,6 +32,5 @@ const UserSchema: Schema = new Schema({
     }
 });
 
-// module.exports = mongoose.model('User', UserSchema);
 const User = mongoose.model<UserInterface>('User', UserSchema);
 export default User;
