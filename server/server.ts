@@ -1,4 +1,4 @@
-import express, { Request, Response } from 'express';
+import express from 'express';
 const morgan = require("morgan");
 const mongoose = require('mongoose');
 import dotenv from 'dotenv';
@@ -32,7 +32,7 @@ app.set("port", process.env.PORT || 5300);
 app.use(express.json()); // para interpretar json
 
 // Routes
-app.use('/user',require("./routes/user"));
+app.use('/user',require("./routes/user_route"));
 
 app.listen(app.get("port"), () => {
   console.log(`Server running at http://localhost:` + app.get("port"));
