@@ -18,11 +18,19 @@ router.post("/", async (req: Request, res: Response) => {
 });
 
 router.put("/:id", async (req: Request, res: Response) => {
-
+  await User.findByIdAndUpdate(req.params.id, req.body);
+  res.json({
+    message: "User updated successfully",
+    status: 201
+  });
 });
 
 router.delete("/:id", async (req: Request, res: Response) => {
-
+  await User.findByIdAndDelete(req.params.id);
+  res.json({
+    message: "User deleted successfully",
+    status: 201
+  });
 });
 
 
