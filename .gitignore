@@ -10,6 +10,12 @@ lerna-debug.log*
 # Diagnostic reports (https://nodejs.org/api/report.html)
 report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 
+# ThunderClient Requests JSON
+thunder-collection_StudyMethod.json
+
+# Notes directory
+notes/
+
 # Runtime data
 pids
 *.pid
@@ -41,6 +47,7 @@ build/Release
 # Dependency directories
 node_modules/
 jspm_packages/
+server/dist/
 
 # Snowpack dependency directory (https://snowpack.dev/)
 web_modules/
