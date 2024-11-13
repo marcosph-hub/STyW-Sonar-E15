@@ -24,7 +24,7 @@ const ChronometerSchema:Schema = new Schema({
     }
 }) 
 
-ChronometerSchema.index({Iduser:1,IDsubject:1,},{unique:true})
+ChronometerSchema.index({Iduser:1,IDsubject:1},{unique:true})
 
 const Chronometer = mongoose.model<ChronometerInterface>('Chronometer', ChronometerSchema);
 
