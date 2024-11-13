@@ -22,11 +22,15 @@ const HistorySubjectSchema:Schema = new Schema({
     time:{
         type:Number,
         require: true,
+        min: [0,'Time can no be minous or equal than 0']
     },
     date:{
         type:Date,
         require:true,
-
+        validate:{
+            validator: function(value:Date){ const now = new Date(); return value > now},
+            message: 'Date must not be before than the actual date'
+        }
     }
 })
 
