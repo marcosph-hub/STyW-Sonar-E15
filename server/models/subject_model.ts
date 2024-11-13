@@ -25,3 +25,4 @@ const SubjectSchema:Schema = new Schema({
 })
 
 const Subject = mongoose.model<SubjectInterface>('Subject', SubjectSchema);
+export default Subject;
