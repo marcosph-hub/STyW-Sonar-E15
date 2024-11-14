@@ -12,9 +12,12 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon --watch src --ext ts --exec ts-node ./server/server.ts"
+    "server": "cd server && npm start",
+    "client": "cd client && npm run dev",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
   },
   "dependencies": {
+    "concurrently": "^9.1.0",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.21.1",
