@@ -1,6 +1,7 @@
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
-import { User,UsersInterfaces } from '@/models/users_model.js'
+import type {UsersInterfaces } from '@/models/users_model'
+import { User } from '@/models/users_model'
 import { Types } from 'mongoose';
 import dotenv from 'dotenv';
 
@@ -19,7 +20,7 @@ export const useUsersStorre = defineStore('User',()=>{
     }
     async function deleteUser(id: Types.ObjectId) 
     { 
-        const index = user.value.findIndex(usuario => usuario._id.equals(id)); 
+        const index = user.value.findIndex(usuario => {if(usuario._id)usuario._id.equals(id)}); 
         if (index !== -1) 
         { 
           user.value.splice(index, 1); 
