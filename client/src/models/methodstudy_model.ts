@@ -16,6 +16,6 @@ export class MethodStudy implements MethodStudyInterfaces{
       public time_study:number,
       public time_break:number,
       public description:string,
-      _id?:Types.ObjectId
+      public _id?:Types.ObjectId
     ) {}
 }
