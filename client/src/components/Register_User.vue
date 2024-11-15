@@ -56,11 +56,11 @@
   
   <script lang="ts">
   import { defineComponent, reactive } from 'vue';
-  import { useUsersStorre } from '@/stores/users_store';
+  import { useUsersStore } from '@/stores/users_store';
   
   export default defineComponent({
     setup() {
-      const userStore = useUsersStorre();
+      const userStore = useUsersStore();
   
       // Estado reactivo para el formulario
       const userForm = reactive({
@@ -112,7 +112,7 @@
       async function agregarUsuario() {
         if (validarFormulario()) {
           try {
-            await userStore.addUser(userForm);
+            await userStore.registerUser(userForm);
             alert('Usuario agregado exitosamente.');
             // Limpiar formulario
             userForm.user_name = '';
