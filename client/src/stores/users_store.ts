@@ -48,7 +48,7 @@ export const useUsersStore = defineStore('User',()=>{
         }
       }
     }
-    async function deleteUserByEmail(email: string): Promise<void> {
+    async function deleteUserByID(email: string): Promise<void> {
       try {
         const port: number | string = process.env.PORT || 5300;
     
@@ -86,11 +86,20 @@ export const useUsersStore = defineStore('User',()=>{
         const port: number | string = process.env.PORT || 5300;
     
         // Verificar si el usuario existe en el estado antes de realizar la solicitud
-        const index = user.value.findIndex((usuario) => usuario._id?.equals(id));
-        if (index === -1) {
-          error.value = 'User not found in local state';
-          return;
-        }
+        const index = user.value.findIndex((usuario) => {
+          // Si usuario._id es un string
+          if (typeof usuario._id === 'string' && typeof id === 'string') {
+            return usuario._id === id;
+          }
+          
+          // Si usuario._id es un ObjectId y id es un ObjectId
+          if (usuario._id instanceof Types.ObjectId && id instanceof Types.ObjectId) {
+            return usuario._id.equals(id);
+          }
+        
+          // Si los tipos no coinciden, devolver false (no encontrado)
+          return false;
+        });
     
         // Realizar la petición PUT usando Axios
         const response = await axios.put(`http://localhost:${port}/user/${id}`, datosActualizados, {
