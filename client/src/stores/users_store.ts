@@ -1,19 +1,32 @@
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
+import axios from 'axios'
 import type {UsersInterfaces } from '@/models/users_model'
 import { User } from '@/models/users_model'
 import { Types } from 'mongoose';
 import dotenv from 'dotenv';
-
 dotenv.config();
+
 export const useUsersStorre = defineStore('User',()=>{
     const user = ref<UsersInterfaces[]>([]);
+    const error = ref<string | null>(null);
 
     async function getUsers() {
-        const port:number | string= process.env.PORT || 5300; 
-        const response = await fetch('http://localhost:'+ port)
-        const data: UsersInterfaces[] = await response.json(); //se añade el tipo de datos que va a contener 
-        user.value= data.map((user)=> new User(user.user_name,user.email,user.password,user.role,user._id))
+      try {
+        const port: number | string = process.env.PORT || 5300; 
+        const response = await axios.get<UsersInterfaces[]>(`http://localhost:${port}/user`);
+    
+        user.value = response.data.map(
+          (user) => new User(user.user_name, user.email, user.password, user.role, user._id)
+        );
+        error.value = null;
+      } catch (err: unknown) {
+        if (err instanceof Error) {
+          console.error('Error:', err.message);
+          error.value = 'Error getting the list of users';
+        }
+      }
+        //user.value= data.map((user)=> new User(user.user_name,user.email,user.password,user.role,user._id))
     }
     async function addUser(useradd:UsersInterfaces) {
       const port:number | string= process.env.PORT || 5300;
