@@ -3,8 +3,8 @@ import axios from 'axios';
 
 export const useUserStore = defineStore('user', {
   state: () => ({
-    users: [] as Array<{ name: string; email: string; role: string }>, // para almacenar los usuarios
-    user: null as null | { name: string; email: string; role: string }, // para un solo usuario
+    users: [] as Array<{ name: string; email: string; role: string }>, 
+    user: null as null | { name: string; email: string; role: string }, 
     error: null as null | string,
   }),
 
@@ -21,13 +21,13 @@ export const useUserStore = defineStore('user', {
         }
       }
     },
-
+    // async registerUsers(userData: UsersInterfaces) {
     async registerUser(userData: { name: string; email: string; password: string; role: string }) {
       try {
+        // const port: number | string = process.env.port || 5300;
         const response = await axios.post('http://localhost:5300/user/register', userData);
-        this.users.push(response.data); // Agrega el nuevo usuario a la lista
+        this.users.push(response.data);
       } catch (error: unknown) {
-        // this.error = 'Error al registrar el usuario';
         if (error instanceof Error) {
           console.error('Error:', error.message);
           this.error = 'Error registering the user';
@@ -40,7 +40,6 @@ export const useUserStore = defineStore('user', {
         const response = await axios.post('http://localhost:5300/user/login', { email, password });
         this.user = response.data;
       } catch (error: unknown) {
-        // this.error = 'Error al iniciar sesión';
         if (error instanceof Error) {
           console.error('Error:', error.message);
           this.error = 'Error logging in';
@@ -53,7 +52,6 @@ export const useUserStore = defineStore('user', {
         await axios.put(`http://localhost:5300/user/${id}`, userData);
         await this.fetchUsers(); // Refresca la lista de usuarios
       } catch (error:unknown) {
-        // this.error = 'Error al actualizar el usuario';
         if (error instanceof Error) {
           console.error('Error:', error.message);
           this.error = 'Error updating the user';
@@ -64,9 +62,8 @@ export const useUserStore = defineStore('user', {
     async deleteUser(email: string) {
       try {
         await axios.delete(`http://localhost:5300/user/${email}`);
-        this.users = this.users.filter(user => user.email !== email); // Elimina el usuario localmente
+        this.users = this.users.filter(user => user.email !== email); 
       } catch (error:unknown) {
-        // this.error = 'Error al eliminar el usuario';
         if (error instanceof Error) {
           console.error('Error:', error.message);
           this.error = 'Error deleting the user';
