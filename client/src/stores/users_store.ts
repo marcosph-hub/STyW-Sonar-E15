@@ -1,4 +1,4 @@
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import { defineStore } from 'pinia';
 import axios from 'axios';
 import type {UsersInterfaces } from '@/models/users_model';
@@ -11,13 +11,17 @@ export const useUsersStore = defineStore('User',()=>{
     const user = ref<UsersInterfaces[]>([]);
     const error = ref<string | null>(null);
 
+    const errorMessage = computed(() => {
+      return error.value ? error.value : '';
+    });
+
     async function getUsers() {
       try {
-        const port: number | string = process.env.PORT || 5300; 
-        const response = await axios.get<UsersInterfaces[]>(`http://localhost:${port}/user`);
+        const apiUrl = import.meta.env.VUE_APP_API_URL || 'http://localhost:5300'; 
+        const response = await axios.get<UsersInterfaces[]>(`${apiUrl}/user`);
     
         user.value = response.data.map(
-          (user) => new User(user.user_name, user.email, user.password, user.role, user._id?.toString() || '')
+          (user) => new User(user.name, user.email, user.password, user.role, user._id?.toString() || '')
         );
         error.value = null;
       } catch (err: unknown) {
@@ -29,15 +33,19 @@ export const useUsersStore = defineStore('User',()=>{
     }
 
     async function registerUser(useradd: UsersInterfaces) {
+      console.log('Datos enviados:', useradd);
       try {
-        const port: number | string = process.env.PORT || 5300;
-        const response = await axios.post<UsersInterfaces>(`http://localhost:${port}/register`, useradd, {
+        const apiUrl = import.meta.env.VUE_APP_API_URL || 'http://localhost:5300';
+        console.log(apiUrl); // Verifica la URL que se está utilizando
+
+        const response = await axios.post<UsersInterfaces>(`${apiUrl}/user/register`, useradd, {
           headers: {
             'Content-Type': 'application/json',
           },
         });
     
         const addedUser = response.data;
+        console.log("addedUser:",addedUser);
         user.value.push(addedUser);
         console.log('User added succesfully:', addedUser);
       } catch (error: unknown) {
@@ -121,5 +129,5 @@ export const useUsersStore = defineStore('User',()=>{
         console.error(error.value); // Registrar el error en la consola para depuración
       }
     }
-    return {user,registerUser,getUsers,putUser,deleteUserByID}
+    return {user, error, errorMessage ,registerUser, getUsers, putUser, deleteUserByID}
 })
