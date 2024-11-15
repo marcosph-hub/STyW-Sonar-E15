@@ -7,7 +7,7 @@
           <label for="name">Nombre:</label>
           <input
             id="name"
-            v-model="userForm.user_name"
+            v-model="userForm.name"
             type="text"
             placeholder="Ingrese el nombre"
           />
@@ -22,7 +22,7 @@
             type="text"
             placeholder="Ingrese la contraseña"
           />
-          <span v-if="errores.name">{{ errores.name }}</span>
+          <span v-if="errores.password">{{ errores.password }}</span> <!-- errores.name -->
         </div>  
         <!-- Campo Email -->
         <div>
@@ -64,7 +64,7 @@
   
       // Estado reactivo para el formulario
       const userForm = reactive({
-        user_name: '',
+        name: '', // antes user_name
         email: '',
         role: '',
         password: ''
@@ -85,7 +85,7 @@
         errores.email = '';
         errores.role = '';
   
-        if (!userForm.user_name) {
+        if (!userForm.name) {
           errores.name = 'El nombre es obligatorio.';
           valido = false;
         }
@@ -115,8 +115,9 @@
             await userStore.registerUser(userForm);
             alert('Usuario agregado exitosamente.');
             // Limpiar formulario
-            userForm.user_name = '';
+            userForm.name = '';
             userForm.email = '';
+            userForm.password = '';
             userForm.role = '';
           } catch (error) {
             console.error('Error al agregar usuario:', error);
