@@ -22,7 +22,11 @@ const router = createRouter({
       path: '/users',
       name:'UserList',
       component: UserList,
-    }
+    },
+    { 
+      path: '/formulario', 
+      name: 'formulario', 
+      component: () => import('../components/Register_User_Form.vue') }
   ],
 })
 

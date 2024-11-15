@@ -4,7 +4,7 @@ export interface UsersInterfaces{
     _id?: Types.ObjectId | string;
     user_name:string;
     email:string;
-    password:string;
+    
     role:string;
     
 }
