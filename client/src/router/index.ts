@@ -26,7 +26,7 @@ const router = createRouter({
     { 
       path: '/formulario', 
       name: 'formulario', 
-      component: () => import('../components/Register_User_Form.vue') }
+      component: () => import('../components/Register_User.vue') }
   ],
 })
 
