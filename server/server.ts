@@ -2,6 +2,7 @@ import express from 'express';
 const morgan = require("morgan");
 const mongoose = require('mongoose');
 import dotenv from 'dotenv';
+import cors from 'cors';
 
 // Cargar las variables de entorno
 dotenv.config();
@@ -30,7 +31,7 @@ app.set("port", process.env.PORT || 5300);
 
 // Middleware
 app.use(express.json()); // para interpretar json
-
+app.use(cors());
 // Routes
 app.use('/user',require("./routes/user_route"));
 
