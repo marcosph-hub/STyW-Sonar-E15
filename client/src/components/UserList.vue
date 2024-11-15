@@ -1,36 +1,40 @@
 <template>
   <div>
-    <!-- Botón para mostrar la lista de usuarios -->
-    <button @click="mostrarLista">Obtener Usuarios</button>
+    <h2>Lista de Usuarios</h2>
+    <ul>
+      <li v-for="user in users" :key="user.email">
+        <p>{{ user.name }} - {{ user.email }} - {{ user.role }}</p>
+      </li>
+    </ul>
+    <!-- Usar error.value en lugar de error -->
+    <p v-if="errorMessage" class="error">{{ errorMessage }}</p>
 
-    <!-- Mostrar la lista solo si `mostrarUsuarios` es verdadero -->
-    <div v-if="mostrarUsuarios">
-      <h2>Lista de Usuarios:</h2>
-        <li v-for="user in userStore.user" :key="user.email">
-          {{ user.user_name }} - {{ user.email }} - {{ user.role }}
-        </li>
-    </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue';
+import { defineComponent, onMounted } from 'vue';
 import { useUsersStore } from '@/stores/users_store';
 
 export default defineComponent({
   setup() {
-    const userStore = useUsersStore();
-    const mostrarUsuarios = ref(false); // Controla si se muestra la lista
+    const usersStore = useUsersStore();
 
-    // Función para mostrar la lista y obtener los usuarios
-    async function mostrarLista() {
-      mostrarUsuarios.value = true; // Cambiar a true para mostrar la lista
-      await userStore.getUsers(); // Llamar a la acción del store para obtener usuarios
-    }
+    // Cargar la lista de usuarios cuando el componente se monta
+    onMounted(() => {
+      usersStore.getUsers();
+    });
 
-    return { userStore, mostrarUsuarios, mostrarLista };
+    return {
+      users: usersStore.user,
+      errorMessage: usersStore.errorMessage,  // `error` es un ref, debes acceder a `.value` en el template
+    };
   },
 });
 </script>
 
-
+<style scoped>
+.error {
+  color: red;
+}
+</style>
