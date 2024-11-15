@@ -1,35 +1,36 @@
 <template>
   <div>
-    <h2>Lista de Usuarios:</h2>
-    <div v-if="userStore.error">{{ userStore.error }}</div>
-    <ul>
-      <li v-for="user in userStore.users" :key="user.email">
-        {{ user.name }} - {{ user.email }} - {{ user.role }}
-      </li>
-    </ul>
-    <button @click="fetchUsers">Obtener Usuarios</button>
-    <input type="
-    ">
+    <!-- Botón para mostrar la lista de usuarios -->
+    <button @click="mostrarLista">Obtener Usuarios</button>
+
+    <!-- Mostrar la lista solo si `mostrarUsuarios` es verdadero -->
+    <div v-if="mostrarUsuarios">
+      <h2>Lista de Usuarios:</h2>
+        <li v-for="user in userStore.user" :key="user.email">
+          {{ user.user_name }} - {{ user.email }} - {{ user.role }}
+        </li>
+    </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted } from 'vue'
-import { useUserStore } from '@/stores/userStore'
+import { defineComponent, ref } from 'vue';
+import { useUsersStorre } from '@/stores/users_store';
 
 export default defineComponent({
   setup() {
-    const userStore = useUserStore()
+    const userStore = useUsersStorre();
+    const mostrarUsuarios = ref(false); // Controla si se muestra la lista
 
-    function fetchUsers() {
-      userStore.fetchUsers()
+    // Función para mostrar la lista y obtener los usuarios
+    async function mostrarLista() {
+      mostrarUsuarios.value = true; // Cambiar a true para mostrar la lista
+      await userStore.getUsers(); // Llamar a la acción del store para obtener usuarios
     }
 
-    onMounted(() => {
-      fetchUsers() // Obtener usuarios al montar el componente
-    })
-
-    return { userStore, fetchUsers }
+    return { userStore, mostrarUsuarios, mostrarLista };
   },
-})
+});
 </script>
+
+
