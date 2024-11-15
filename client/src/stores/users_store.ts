@@ -1,4 +1,4 @@
-import { ref, computed } from 'vue'
+import { ref } from 'vue'
 import { defineStore } from 'pinia'
 import type {UsersInterfaces } from '@/models/users_model'
 import { User } from '@/models/users_model'
@@ -10,13 +10,13 @@ export const useUsersStorre = defineStore('User',()=>{
     const user = ref<UsersInterfaces[]>([]);
 
     async function getUsers() {
-        let port:number | string= process.env.PORT || 5300; 
+        const port:number | string= process.env.PORT || 5300; 
         const response = await fetch('http://localhost:'+ port)
-        const data = await response.json();
-        user.value= data.map((user:any)=> new User(user.user_name,user.email,user.password,user.role,user._id))
+        const data: UsersInterfaces[] = await response.json(); //se añade el tipo de datos que va a contener 
+        user.value= data.map((user)=> new User(user.user_name,user.email,user.password,user.role,user._id))
     }
     async function addUser(useradd:UsersInterfaces) {
-      let port:number | string= process.env.PORT || 5300;
+      const port:number | string= process.env.PORT || 5300;
       try{
       const response = await fetch('http://localhost/register:'+ port, 
        { method: 'POST', headers: 
@@ -31,11 +31,11 @@ export const useUsersStorre = defineStore('User',()=>{
       }
     async function deleteUser(id: Types.ObjectId) 
     { 
-        let port:number | string= process.env.PORT || 5300;
+        const port:number | string= process.env.PORT || 5300;
         const index = user.value.findIndex(usuario => {if(usuario._id)usuario._id.equals(id)}); 
         if (index !== -1) 
         {       
-           const response = await fetch('http://localhost/'+ id +':'+ port, 
+           /*const response = */await fetch('http://localhost/'+ id +':'+ port, 
            { method: 'DELETE', headers: 
            { 'Content-Type': 'application/json' }
            });
@@ -49,11 +49,11 @@ export const useUsersStorre = defineStore('User',()=>{
     async function putUser(id: Types.ObjectId, datosActualizados: Partial<UsersInterfaces>) 
       { 
         try{
-        let port:number | string= process.env.PORT || 5300;
+        const port:number | string= process.env.PORT || 5300;
         const index = user.value.findIndex(usuario => usuario._id?.equals(id)); 
          if (index !== -1) 
          {  
-          const response = await fetch('http://localhost/'+ id +':'+ port, 
+          /*const response = */await fetch('http://localhost/'+ id +':'+ port, 
           { method: 'PUT', headers: 
           { 'Content-Type': 'application/json' }, 
              body: JSON.stringify(datosActualizados), 
@@ -69,3 +69,12 @@ export const useUsersStorre = defineStore('User',()=>{
     }
     return {user,addUser,getUsers,putUser,deleteUser}
 })
+
+/**
+ *  a tomar en cuenta
+ *  ref<UsersInterfaces[]>([]) -> state reactivo que se actuliza de manera dinamica segun hallan modificaciones
+ * debido a las request que se hagan
+ * 
+ * se pueden simplificar y "modernizar" las request con el uso de axios
+ * 
+ */

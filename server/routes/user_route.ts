@@ -15,7 +15,6 @@ router.get("/", async (req: Request, res: Response) => {
   }
 });
 
-// FIXME:analizar si name password y role son necesarios
 router.post("/register", async (req: Request, res: Response) => {
   try {
     const { email } = req.body;

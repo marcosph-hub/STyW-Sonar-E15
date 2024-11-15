@@ -1,7 +1,6 @@
 <template>
   <div>
     <h2>Lista de Usuarios:</h2>
-    <a>Puto quien lo lea (sobre todo si te llamas Paula)</a>
     <div v-if="userStore.error">{{ userStore.error }}</div>
     <ul>
       <li v-for="user in userStore.users" :key="user.email">
@@ -9,6 +8,8 @@
       </li>
     </ul>
     <button @click="fetchUsers">Obtener Usuarios</button>
+    <input type="
+    ">
   </div>
 </template>
 
