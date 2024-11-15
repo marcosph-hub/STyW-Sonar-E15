@@ -15,11 +15,11 @@
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
-import { useUsersStorre } from '@/stores/users_store';
+import { useUsersStore } from '@/stores/users_store';
 
 export default defineComponent({
   setup() {
-    const userStore = useUsersStorre();
+    const userStore = useUsersStore();
     const mostrarUsuarios = ref(false); // Controla si se muestra la lista
 
     // Función para mostrar la lista y obtener los usuarios
