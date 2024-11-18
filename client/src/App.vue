@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
+// import HelloWorld from './components/HelloWorld.vue'
 </script>
 
 <template>
@@ -8,7 +8,7 @@ import HelloWorld from './components/HelloWorld.vue'
     <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
 
     <div class="wrapper">
-      <HelloWorld msg="You did it!" />
+      <!-- <HelloWorld msg="You did it!" /> -->
 
       <nav>
         <RouterLink to="/">Home</RouterLink>
@@ -18,14 +18,25 @@ import HelloWorld from './components/HelloWorld.vue'
       </nav>
     </div>
   </header>
-
+<main>
   <RouterView />
+</main>
 </template>
 
 <style scoped>
-header {
-  line-height: 1.5;
-  max-height: 100vh;
+
+#app {
+  display: flex;
+  flex-direction: column; /* Apila header y main verticalmente */
+  min-height: 100vh; /* La página ocupa toda la altura del viewport */
+  background-color: #1b4229; /* Fondo global */
+  color: white; /* Texto claro para contraste */
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .logo {
@@ -38,6 +49,8 @@ nav {
   font-size: 12px;
   text-align: center;
   margin-top: 2rem;
+  display: flex;
+  gap: 1rem;
 }
 
 nav a.router-link-exact-active {
@@ -54,8 +67,17 @@ nav a {
   border-left: 1px solid var(--color-border);
 }
 
+nav a:hover {
+  text-decoration: underline;
+}
+
 nav a:first-of-type {
   border: 0;
+}
+
+main {
+  flex-grow: 1; /* Ocupa el espacio restante */
+  padding: 2rem;
 }
 
 @media (min-width: 1024px) {

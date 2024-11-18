@@ -28,8 +28,8 @@ a,
   }
 
   #app {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+    display: flex; /* Cambiar a flexbox */
+    flex-direction: column; /* Apila header y main verticalmente */
     padding: 0 2rem;
   }
 }
