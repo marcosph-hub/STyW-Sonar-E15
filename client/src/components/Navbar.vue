@@ -3,11 +3,11 @@
       <div class="menu-container">
         <nav class="menu"> 
             <ul> 
+                <li><img src="./../../public/Study_Method.ico" alt="Method Study Logo" class="logo" /></li>
             <li><h1 class="logo">Method Study</h1></li>
             <li><router-link to="/">Inicio</router-link></li>
             <li><router-link to="/about">Acerca de </router-link></li>
             <li><a href="#contacto">Contacto</a></li> 
-            <li><img src="./../../public/Study_Method.ico" alt="Method Study Logo" class="logo" /></li>
             <div class="auth-buttons"> 
                 <ul>                
                     <li><button @click="handleLogin">Iniciar Sesión</button> </li>
@@ -63,13 +63,17 @@
   }
   
   .logo{
-    height: 40px;
+    height: 30px;
+    margin-top: 0px;
   }
 
-  .menu ul li {
-    margin-left: 100px;
+  .menu ul li h1{
+    margin-top: -6px;
   }
-  
+  .menu ul li {
+    margin-left: 50px;
+    margin-top: 5px;
+  }  
   .menu ul li a {
     text-decoration: none;
     color: white;
@@ -79,6 +83,7 @@
   
   .menu ul li a:hover {
     color: #ff6600;
+    margin-top: 5px;
   }
 
   .auth-buttons button {
@@ -90,6 +95,10 @@
   cursor: pointer;
   transition: background-color 0.3s ease;
   font-size: 0.9rem;
+}
+
+.auth-buttons{
+    margin-left: 100px;
 }
 
 .auth-buttons button:hover {

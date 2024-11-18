@@ -1,20 +1,31 @@
 <script setup lang="ts">
 import { RouterView } from 'vue-router'
 //import HelloWorld from './components/HelloWorld.vue'
+import { ref, onMounted } from 'vue'; 
+const show = ref(false); 
+// Inicialmente está oculto 
+onMounted(() => 
+{ 
+  show.value = true; 
+});
+
+
 </script>
 
 <template>
   <header>
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
     <RouterView />
-    <div class="wrapper">
-
-      
-      
-    </div>
   </header>
-
-
+   <main>
+    <div id="Mostrar tituo"></div>
+    <transition name="slide"> 
+      <div v-if="show" class="container"> 
+        <h1>Bienvenido</h1> 
+        <p>Esta es tu página ideal para estudiar</p> 
+      </div> 
+    </transition>
+   </main>
+   
 </template>
 <style scoped>
 header {
@@ -78,4 +89,42 @@ nav a:first-of-type {
     margin-top: 1rem;
   }
 }
+
+/* Clases de transición */
+.slide-enter-active, .slide-leave-active {
+  transition: transform 0.5s ease, opacity 0.5s ease;
+}
+
+.slide-enter-from {
+  transform: translateX(-100%); /* Posición inicial: Fuera de la pantalla a la izquierda */
+  opacity: 0; /* Invisible inicialmente */
+}
+
+.slide-enter-to {
+  transform: translateX(0); /* Posición final: En su lugar */
+  opacity: 1; /* Completamente visible */
+}
+
+.slide-leave-from {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+.slide-leave-to {
+  transform: translateX(-100%);
+  opacity: 0;
+}
+
+
+.container {
+  text-align: left;
+  font-family: Arial, sans-serif;
+  margin-right: 500px;
+  font-size: 3rem;
+  width: 900px;
+}
+
+
+
+
 </style>
