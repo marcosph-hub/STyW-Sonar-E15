@@ -1,6 +1,7 @@
 import express from 'express';
 const morgan = require("morgan");
 const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
 import dotenv from 'dotenv';
 import cors from 'cors';
 
@@ -31,7 +32,12 @@ app.set("port", process.env.PORT || 5300);
 
 // Middleware
 app.use(express.json()); // para interpretar json
-app.use(cors());
+app.use(bodyParser.json());
+app.use(cors({
+  origin: 'http://localhost:5173', 
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
 // Routes
 app.use('/user',require("./routes/user_route"));
 

@@ -1,35 +1,40 @@
 <template>
   <div>
-    <h2>Lista de Usuarios:</h2>
-    <div v-if="userStore.error">{{ userStore.error }}</div>
+    <h2>Lista de Usuarios</h2>
     <ul>
-      <li v-for="user in userStore.users" :key="user.email">
-        {{ user.name }} - {{ user.email }} - {{ user.role }}
+      <li v-for="user in users" :key="user.email">
+        <p>{{ user.name }} - {{ user.email }} - {{ user.role }}</p>
       </li>
     </ul>
-    <button @click="fetchUsers">Obtener Usuarios</button>
-    <input type="
-    ">
+    <!-- Usar error.value en lugar de error -->
+    <p v-if="errorMessage" class="error">{{ errorMessage }}</p>
+
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted } from 'vue'
-import { useUserStore } from '@/stores/userStore'
+import { defineComponent, onMounted } from 'vue';
+import { useUsersStore } from '@/stores/users_store';
 
 export default defineComponent({
   setup() {
-    const userStore = useUserStore()
+    const usersStore = useUsersStore();
 
-    function fetchUsers() {
-      userStore.fetchUsers()
-    }
-
+    // Cargar la lista de usuarios cuando el componente se monta
     onMounted(() => {
-      fetchUsers() // Obtener usuarios al montar el componente
-    })
+      usersStore.getUsers();
+    });
 
-    return { userStore, fetchUsers }
+    return {
+      users: usersStore.user,
+      errorMessage: usersStore.errorMessage,  // `error` es un ref, debes acceder a `.value` en el template
+    };
   },
-})
+});
 </script>
+
+<style scoped>
+.error {
+  color: red;
+}
+</style>

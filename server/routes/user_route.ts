@@ -31,6 +31,8 @@ router.post("/register", async (req: Request, res: Response) => {
     if (error instanceof Error) {
       console.error('Error:', error.message);
       res.status(500).json({ error: 'Internal Server Error' });
+    } else {
+      res.status(500).json({ error: 'Internal Server Error' });
     }
   }
 });
