@@ -62,9 +62,14 @@
 }
 
 header {
-  background-color: var(--vt-c-green-hard);
+  /* background-color: var(--vt-c-green-hard); */
   padding: 1rem 2rem;
   text-align: center;
+  display: flex;
+  justify-content: space-between; /* Separa el logo y el nav */
+  align-items: center; /* Centra verticalmente los elementos */
+  width: 100%;
+  position: sticky;
 }
 
 header img {
@@ -78,8 +83,8 @@ header img {
 
 body {
   min-height: 100vh;
-  color: var(--color-text);
-  background: var(--color-background);
+  /* color: var(--color-text); */
+  /* background: var(--color-background); */
   transition:
     color 0.5s,
     background-color 0.5s;
