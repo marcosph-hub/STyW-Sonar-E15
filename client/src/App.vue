@@ -1,20 +1,22 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
+import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap/dist/js/bootstrap.bundle.min.js";
 // import HelloWorld from './components/HelloWorld.vue'
 </script>
 
 <template>
   <header>
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
+    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="90" height="90" />
 
     <div class="wrapper">
       <!-- <HelloWorld msg="You did it!" /> -->
 
       <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-        <RouterLink to="/users">Users</RouterLink>
-        <RouterLink to="/register">Register</RouterLink>
+        <RouterLink class="link-success link-underline-opacity-0" to="/">Home</RouterLink>
+        <RouterLink class="link-success link-underline-opacity-0" to="/about">About</RouterLink>
+        <RouterLink class="link-success link-underline-opacity-0" to="/register">Register</RouterLink>
+        <!-- <RouterLink class="link-success link-underline-opacity-0" to="/users">Users</RouterLink> -->
       </nav>
     </div>
   </header>
@@ -29,8 +31,6 @@ import { RouterLink, RouterView } from 'vue-router'
   display: flex;
   flex-direction: column; /* Apila header y main verticalmente */
   min-height: 100vh; /* La página ocupa toda la altura del viewport */
-  background-color: #1b4229; /* Fondo global */
-  color: white; /* Texto claro para contraste */
 }
 
 .header-content {
@@ -42,6 +42,8 @@ import { RouterLink, RouterView } from 'vue-router'
 .logo {
   display: block;
   margin: 0 auto 2rem;
+  width: 50px;
+  height: auto;
 }
 
 nav {
@@ -50,6 +52,7 @@ nav {
   text-align: center;
   margin-top: 2rem;
   display: flex;
+  justify-content: flex-end;
   gap: 1rem;
 }
 
@@ -84,6 +87,7 @@ main {
   header {
     display: flex;
     place-items: center;
+    background-color: #344E41;
     padding-right: calc(var(--section-gap) / 2);
   }
 
@@ -93,8 +97,10 @@ main {
 
   header .wrapper {
     display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
+    justify-content: space-between; /* Separa el logo y el nav */
+    align-items: center; /* Centra verticalmente los elementos */
+    width: 100%;
+    position: sticky;
   }
 
   nav {
