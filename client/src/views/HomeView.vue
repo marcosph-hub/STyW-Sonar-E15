@@ -8,9 +8,9 @@ import "bootstrap/dist/js/bootstrap.bundle.min.js";
         <div class="home-page">
             <div class="text-center py-5">
                 <div class="container">
-                    <h1 class="display-4 fw-bold text-success">Welcome to StudyMethod</h1>
+                    <h1 class="display-4 fw-bold text-success"> Welcome to StudyMethod</h1>
                     <p class="lead text-secondary">
-                        The ultimate tool for students to manage their study time
+                        The ultimate tool for students to manage their stuyd time.
                     </p>
                     <div class="mt-4">
                         <RouterLink to="/register" class="btn btn-primary btn-lg me-2">Log In</RouterLink>
