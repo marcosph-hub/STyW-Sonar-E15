@@ -1,59 +1,40 @@
 <script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router'
-import "bootstrap/dist/css/bootstrap.min.css";
-import "bootstrap/dist/js/bootstrap.bundle.min.js";
-// import HelloWorld from './components/HelloWorld.vue'
-// import { RouterView } from 'vue-router'
-//import HelloWorld from './components/HelloWorld.vue'
-import { ref, onMounted } from 'vue'; 
-const show = ref(false); 
-// Inicialmente está oculto 
-onMounted(() => 
-{ 
-  show.value = true; 
-});
-
+import { RouterView } from 'vue-router'
 
 </script>
 
 <template>
   <header>
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="90" height="90" />
-
-    <div class="wrapper">
-      <!-- <HelloWorld msg="You did it!" /> -->
-
-      <nav>
-        <RouterLink class="link-success link-underline-opacity-0" to="/">Home</RouterLink>
-        <RouterLink class="link-success link-underline-opacity-0" to="/about">About</RouterLink>
-        <RouterLink class="link-success link-underline-opacity-0" to="/register">Register</RouterLink>
-        <!-- <RouterLink class="link-success link-underline-opacity-0" to="/users">Users</RouterLink> -->
-      </nav>
-    </div>
+    <!-- <nav>
+      <RouterLink class="link-success link-underline-opacity-0" to="/">Home</RouterLink>
+      <RouterLink class="link-success link-underline-opacity-0" to="/about">About</RouterLink>
+      <RouterLink class="link-success link-underline-opacity-0" to="/register">Register</RouterLink>
+      <RouterLink class="link-success link-underline-opacity-0" to="/users">Users</RouterLink>
+    </nav> -->
   </header>
-<main>
-  <RouterView />
-</main>
+   <main>
+    <div id="Mostrar titulo"></div>
+    <RouterView />
+
+    
+   </main>
+   
 </template>
 <style scoped>
 
-#app {
-  display: flex;
-  flex-direction: column; /* Apila header y main verticalmente */
-  min-height: 100vh; /* La página ocupa toda la altura del viewport */
+body {
+  background-color: #344E41;
 }
 
-.header-content {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+
+header {
+  line-height: 1.5;
+  max-height: 100vh;
 }
 
 .logo {
   display: block;
   margin: 0 auto 2rem;
-  width: 50px;
-  height: auto;
 }
 
 nav {
@@ -61,9 +42,6 @@ nav {
   font-size: 12px;
   text-align: center;
   margin-top: 2rem;
-  display: flex;
-  justify-content: flex-end;
-  gap: 1rem;
 }
 
 nav a.router-link-exact-active {
@@ -80,24 +58,14 @@ nav a {
   border-left: 1px solid var(--color-border);
 }
 
-nav a:hover {
-  text-decoration: underline;
-}
-
 nav a:first-of-type {
   border: 0;
-}
-
-main {
-  flex-grow: 1; /* Ocupa el espacio restante */
-  padding: 2rem;
 }
 
 @media (min-width: 1024px) {
   header {
     display: flex;
     place-items: center;
-    background-color: #344E41;
     padding-right: calc(var(--section-gap) / 2);
   }
 
@@ -107,10 +75,8 @@ main {
 
   header .wrapper {
     display: flex;
-    justify-content: space-between; /* Separa el logo y el nav */
-    align-items: center; /* Centra verticalmente los elementos */
-    width: 100%;
-    position: sticky;
+    place-items: flex-start;
+    flex-wrap: wrap;
   }
 
   nav {
