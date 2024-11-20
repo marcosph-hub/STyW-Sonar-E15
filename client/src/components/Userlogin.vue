@@ -21,26 +21,44 @@
         />
       </div>
       <button type="submit">Iniciar seción</button>
+      <p v-if="errorMessage">{{ errorMessage }}</p>
     </form>
   </div>
 </template>
 
-<script>
-export default {
-  name: "LoginForm",
-  data() {
-    return {
-      email: "",
-      password: "",
+<script lang="ts">
+import { defineComponent, ref } from 'vue';
+import { useAuthStore } from '@/stores/authstore';
+
+export default defineComponent({
+  name: 'Login',
+  setup() {
+    const email = ref('');
+    const password = ref('');
+    const errorMessage = ref<string | null>(null);
+
+    const authStore = useAuthStore();
+
+    const handleSubmit = async () => {
+      try {
+        await authStore.login(email.value, password.value);
+        alert("Sesión iniciada con éxito");
+      } catch (error: any) {
+        // Manejar error y mostrar mensaje al usuario
+        errorMessage.value = error.message || "Error desconocido al iniciar sesión.";
+        alert(errorMessage.value);
+      }
     };
+
+    return { email, password, errorMessage, handleSubmit };
   },
-  methods: {
-    handleSubmit() {
-      alert(`Iniciando sesión con: ${this.email}`);;
-    },
-  },
-};
+});
 </script>
+
+
+
+
+
 
 <style scoped>
 /* Estilo básico del cuerpo */
@@ -57,11 +75,12 @@ body {
 
 /* Contenedor principal */
 .login-container {
-  
+  margin-left: 40vh;
   background-color: #fff; /* Fondo blanco */
   padding: 30px;          /* Espaciado interno */
   border: 1px solid #ccc; /* Borde gris claro */
   border-radius: 10px;    /* Bordes redondeados */
+  height: 60vh;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra sutil */
   width: 50vh;           /* Ancho fijo */
 }
@@ -81,7 +100,7 @@ body {
 /* Etiquetas */
 .form-group label {
   display: block;         /* Asegura que esté encima del input */
-  margin-bottom: 5px;
+  margin-bottom: 30px;
   font-size: 14px;
   color: #555;
 }
@@ -107,6 +126,7 @@ button {
   font-size: 16px;        /* Tamaño de fuente */
   cursor: pointer;        /* Cambia el cursor al pasar sobre el botón */
   transition: background-color 0.3s; /* Transición suave al hover */
+  margin-top: 5vh;
 }
 
 button:hover {
