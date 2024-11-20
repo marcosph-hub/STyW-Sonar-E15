@@ -29,20 +29,21 @@
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
 import { useAuthStore } from '@/stores/authstore';
-
+import { useRouter } from 'vue-router';
 export default defineComponent({
   name: 'Login',
   setup() {
     const email = ref('');
     const password = ref('');
     const errorMessage = ref<string | null>(null);
-
+    const router = useRouter()
     const authStore = useAuthStore();
 
     const handleSubmit = async () => {
       try {
         await authStore.login(email.value, password.value);
         alert("Sesión iniciada con éxito");
+        router.push('/');
       } catch (error: any) {
         // Manejar error y mostrar mensaje al usuario
         errorMessage.value = error.message || "Error desconocido al iniciar sesión.";
