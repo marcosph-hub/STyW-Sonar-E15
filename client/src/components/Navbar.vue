@@ -8,34 +8,68 @@
             <li><router-link to="/">Inicio</router-link></li>
             <li><router-link to="/about">Acerca de </router-link></li>
             <li><a href="#contacto">Contacto</a></li> 
-            <div class="auth-buttons"> 
-                <ul>                
-                    <li><button @click="handleLogin">Iniciar Sesión</button> </li>
-                    <li><button @click="handleRegister">Registrarse</button></li> 
-                </ul>
-        </div>
+            <div class="auth-buttons">
+            <ul>
+              <!-- Si el usuario está autenticado -->
+              <li v-if="auth.isAuthenticated">
+                <h2>Bienvenido, {{ auth.name }}</h2>
+              </li>
+              <li v-else>
+                <button @click="handleLogin">Iniciar Sesión</button>
+              </li>
+              <li v-if="auth.isAuthenticated">
+                <button @click="handleLogout">Cerrar Sesión</button>
+              </li>
+              <!-- Si el usuario no está autenticado -->
+              <li v-else>
+                <button @click="handleRegister">Registrarse</button>
+              </li>
+            </ul>
+          </div>
         </ul>
         </nav>
 
       </div>
     </header>
   </template>
-  <script lang="ts">
-
-  export default {
-    name: "NavBar",
-    methods:{
-        handleLogin() {
-      // Aquí puedes redirigir al formulario de inicio de sesión
-      this.$router.push("/login");
-    },
-    handleRegister() {
-      // Aquí puedes redirigir al formulario de registro
-      this.$router.push("/register");
-    }
-    }
-  };
-  </script>
+ <script lang="ts">
+ import { defineComponent } from "vue";
+ import { useAuthStore } from "@/stores/authstore"; // Tu store de autenticación
+ import { useRouter } from "vue-router";
+ 
+ export default defineComponent({
+   name: "Navbar",
+   setup() {
+     const auth = useAuthStore(); // Accede al store de autenticación
+     const router = useRouter(); // Router para navegar entre vistas
+ 
+ 
+     const handleLogin = () => {
+       router.push("/login"); // Redirige a la página de inicio de sesión
+     };
+ 
+ 
+     const handleRegister = () => {
+       router.push("/register"); // Redirige a la página de registro
+     };
+ 
+ 
+     const handleLogout = async () => {
+       await auth.logout(); // Cierra sesión a través del store
+       router.push("/"); // Redirige al inicio después de cerrar sesión
+     };
+ 
+ 
+     return {
+       auth, // Acceso al estado reactivo del store
+       handleLogin,
+       handleRegister,
+       handleLogout,
+     };
+   },
+ });
+ </script>
+ 
   
   <style scoped>
   .menu-bar {

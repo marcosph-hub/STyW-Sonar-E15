@@ -52,7 +52,7 @@ router.post("/login", async (req: Request, res: Response) => {
       return res.status(404).json({ message: 'Login sesion faliled you must be register' });
     }
     const json = jwt.sign({email},SECRET_KEY,{ expiresIn: TOKEN_EXPIRATION})
-    res.status(200).json({token: json,email: reqUser?.email });
+    res.status(200).json({token: json,email: reqUser?.email,name: reqUser?.name });
   } catch (error: unknown) {
     if (error instanceof Error) {
       console.error('Error:', error.message);

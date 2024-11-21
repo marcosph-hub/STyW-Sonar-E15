@@ -1,8 +1,9 @@
 import { defineStore } from 'pinia';
 import axios from 'axios';
 
-interface AuthState { 
+export interface AuthState { 
     email: string | undefined;
+    name: string | undefined
     token: string | undefined; 
     isAuthenticated: boolean; 
 }
@@ -12,6 +13,7 @@ export const useAuthStore = defineStore('auth', {
         email: undefined,
         token: undefined,
         isAuthenticated: false,
+        name: undefined
     }),
 
     actions: {
@@ -26,6 +28,7 @@ export const useAuthStore = defineStore('auth', {
               const response = await axios.post('http://localhost:5300/user/login', { email, password });
               this.token = response.data.token;
               this.email = response.data.email; 
+              this.name = response.data.name;
               if (this.token) {
                 this.isAuthenticated = true;
       
@@ -46,10 +49,11 @@ export const useAuthStore = defineStore('auth', {
             }
           },
 
-        logout() {
+        async logout() {
             this.email = undefined;
             this.token = undefined;
             this.isAuthenticated = false;
+            this.name =undefined
 
             // Eliminar token del localStorage
             localStorage.removeItem('token');
