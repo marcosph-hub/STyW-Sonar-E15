@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import User from '../models/user_model';
 import jwt from 'jsonwebtoken'
+import bcrypt from 'bcrypt';
 const express = require("express");
 const router = express.Router();
 
@@ -19,12 +20,22 @@ router.get("/", async (req: Request, res: Response) => {
 
 router.post("/register", async (req: Request, res: Response) => {
   try {
-    const { email } = req.body;
+    const { email, password, name, role } = req.body;
+    // const { email } = req.body;
     const userExists = await User.findOne({ email });
     if (userExists) {
       return res.status(400).json({ message: 'Email alrady registered' });
     }
-    const new_user = new User(req.body);
+    const saltRounds = 10; 
+    const hashedPassword = await bcrypt.hash(password, saltRounds);
+
+    const new_user = new User({
+      email,
+      password: hashedPassword,
+      name,
+      role,
+    });
+    console.log(new_user.password);
     await new_user.save();
     res.status(201).json({
       message: "User created successfully"
@@ -46,8 +57,10 @@ router.post("/login", async (req: Request, res: Response) => {
     const { email,password } = req.body;
     if(!email || !password || email === "" || password === "") 
       return res.status(400).json({message: 'User or password must to be proved'})
+
     const reqUser = await User.findOne({ email });
     console.log(reqUser?.email);
+
     if (reqUser?.email !== email || reqUser?.password  !== password) {
       return res.status(404).json({ message: 'Login sesion faliled you must be register' });
     }
