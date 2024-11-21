@@ -15,17 +15,11 @@ import { RouterView } from 'vue-router'
    <main>
     <div id="Mostrar titulo"></div>
     <RouterView />
-
-    
    </main>
    
 </template>
+
 <style scoped>
-
-body {
-  background-color: #344E41;
-}
-
 
 header {
   line-height: 1.5;
@@ -88,10 +82,5 @@ nav a:first-of-type {
     margin-top: 1rem;
   }
 }
-
-
-
-
-
 
 </style>

@@ -148,6 +148,8 @@ export default defineComponent({
   width: 100%; 
   max-width: 500px; 
   border-radius: 20px;
+  border-color: #151B23;
+  background-color: #1f2731;
 }
 
 @media (min-width: 768px) {
@@ -170,8 +172,9 @@ export default defineComponent({
   max-width: 400px;
   margin: 0 auto;
   padding: 20px;
-  background-color: #ffffff;
+  background-color: #151B23;
   border-radius: 8px;
+  
   min-height: 100vh;
   
 }
@@ -181,6 +184,7 @@ h2 {
   margin-bottom: 20px; 
   text-align: center;
   font-weight: 540;
+  color: #588157;
 }
 
 form {
@@ -197,7 +201,7 @@ form {
 form label {
   font-size: 0.9rem; 
   font-weight: 600; 
-  color: #4e4e4e;
+  color: #588157;
   display: block; 
   margin-bottom: 0.5rem; 
 }
@@ -232,12 +236,20 @@ input {
   border: 1px solid var(--color-border);
   border-radius: 10px;
   font-size: 1rem;
+  /* background-color: #151B23; */
+  background-color: #353e49;
+}
+
+input::placeholder {
+  color: #151B23;
+  opacity: 1;
 }
 
 form input:focus {
   border-color: #83af82;
   box-shadow: 0px 0px 4px #79ac92;
   outline: none;
+  background-color: #151B23;
 }
 
 .form-select {
@@ -248,6 +260,8 @@ form input:focus {
   border-radius: 10px;
   font-size: 1rem;
   color: #4e4e4e;
+  background-color: #353e49;
+  color: #151B23;
 }
 
 form select:focus {
@@ -290,7 +304,7 @@ form button {
 }
 
 button:hover  {
-  background-color: #3e4e25;
+  background-color: #344E41;
   cursor: not-allowed;
 }
 

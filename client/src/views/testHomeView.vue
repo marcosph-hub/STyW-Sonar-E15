@@ -64,7 +64,7 @@ import "bootstrap/dist/js/bootstrap.bundle.min.js";
   <style scoped>
   /* Puedes agregar estilos personalizados aquí */
   .bg-light {
-    background-color: #f8f9fa !important;
+    background-color: #707070 !important;
   }
   .text-success {
     color: #1b4229 !important;
