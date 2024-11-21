@@ -89,39 +89,7 @@ nav a:first-of-type {
   }
 }
 
-/* Clases de transición */
-.slide-enter-active, .slide-leave-active {
-  transition: transform 0.5s ease, opacity 0.5s ease;
-}
 
-.slide-enter-from {
-  transform: translateX(-100%); /* Posición inicial: Fuera de la pantalla a la izquierda */
-  opacity: 0; /* Invisible inicialmente */
-}
-
-.slide-enter-to {
-  transform: translateX(0); /* Posición final: En su lugar */
-  opacity: 1; /* Completamente visible */
-}
-
-.slide-leave-from {
-  transform: translateX(0);
-  opacity: 1;
-}
-
-.slide-leave-to {
-  transform: translateX(-100%);
-  opacity: 0;
-}
-
-
-.container {
-  text-align: left;
-  font-family: Arial, sans-serif;
-  margin-right: 500px;
-  font-size: 3rem;
-  width: 900px;
-}
 
 
 
