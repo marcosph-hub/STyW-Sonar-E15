@@ -1,9 +1,9 @@
 @import './base.css';
 
 #app {
-  max-width: 1280px;
+  max-width: 100%;
   margin: 0 auto;
-  padding: 2rem;
+  padding: 1rem;
   font-weight: normal;
 }
 
@@ -28,7 +28,7 @@ a,
   }
 
   #app {
-    display: flex; /* Cambiar a flexbox */
+    display: flex; 
     flex-direction: column; /* Apila header y main verticalmente */
     padding: 0 2rem;
   }
