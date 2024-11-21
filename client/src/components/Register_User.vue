@@ -1,9 +1,8 @@
 <template>
-
   <main class="main-container">
     <div class="container mt-5">
-      <h2 class="text-center mb-4">Sign Up</h2>
-      <form @submit.prevent="registerUser" class="card p-4 shadow">
+      <form @submit.prevent="registerUser" class="card p-4 shadow" style="max-width: 100%; width: 500px;">
+        <h2 class="text-center mb-4">Sign Up</h2>
         <!-- Name -->
         <div class="form-group mb-3">
           <label for="name" class="form-label">Name:</label>
@@ -46,7 +45,7 @@
 
         <!-- Rol -->
         <div class="form-group mb-3">
-          <label for="role" class="form-label">Rol</label>
+          <label for="role" class="form-label">Rol:</label>
           <select 
             id="role" 
             v-model="userForm.role" 
@@ -54,17 +53,17 @@
             :class="{ 'is-invalid': errores.role }"
           >
             <option disabled value="">Select your ocupation</option>
-            <option value="student">Estudiante</option>
-            <option value="teacher">Profesor</option>
-            <option value="college">Universidad</option>
-            <option value="master">Administrador</option>
+            <option value="student">Student</option>
+            <option value="teacher">Teacher</option>
+            <option value="college">University</option>
+            <option value="master">Administrator</option>
           </select>
           <div class="invalid-feedback">{{ errores.role }}</div>
         </div>
 
         <button type="submit" class="btn btn-primary w-100" :disabled="loading">
           <span v-if="loading" class="spinner-border spinner-border-sm"></span>
-          {{ loading ? "Registrando..." : "Registrar Usuario" }}
+          {{ loading ? "Signing Up..." : "Sign Up" }}
         </button>
       </form>
     </div>
@@ -80,15 +79,13 @@ export default defineComponent({
     const userStore = useUsersStore()
     const loading = ref(false);
 
-    // Estado reactivo para el formulario
     const userForm = reactive({
-      name: '', // antes user_name
+      name: '', 
       email: '',
       role: '',
       password: '',
     })
 
-    // Estado para errores
     const errores = reactive({
       name: '',
       email: '',
@@ -96,7 +93,6 @@ export default defineComponent({
       password: '',
     })
 
-    // Validar formulario
     function validarFormulario() {
       let valido = true
       errores.name = ''
@@ -126,9 +122,7 @@ export default defineComponent({
       return valido
     }
 
-    // Función para agregar usuario
     async function registerUser() {
-      // if (validarFormulario()) {
       if (!validarFormulario()) return;
 
       loading.value = true;
@@ -150,14 +144,22 @@ export default defineComponent({
 
 <style scoped>
 
-body {
-  background-color: #344E41;
+.card {
+  width: 100%; 
+  max-width: 500px; 
+  border-radius: 20px;
 }
 
-.card {
-  width: 500px;
-  border-radius: 40px;
-  /* background-color: #344E41; */
+@media (min-width: 768px) {
+  .card {
+    width: 70%;
+  }
+}
+
+@media (min-width: 1200px) {
+  .card {
+    width: 50%; 
+  }
 }
 
 .container {
@@ -170,21 +172,43 @@ body {
   padding: 20px;
   background-color: #ffffff;
   border-radius: 8px;
+  min-height: 100vh;
+  
 }
 
 h2 {
-  font-size: 1.5rem;
-  margin-bottom: 20px; /* Espacio entre el título y el formulario */
+  font-size: 1.9rem;
+  margin-bottom: 20px; 
   text-align: center;
+  font-weight: 540;
+}
+
+form {
+  width: 100%; 
+  max-width: 400px;
+  margin: 3rem auto; 
+  padding: 2rem 1.5rem; 
+  border: 1px solid #ddd;
+  border-radius: 8px; 
+  background-color: #fff;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); 
+}
+
+form label {
+  font-size: 0.9rem; 
+  font-weight: 600; 
+  color: #4e4e4e;
+  display: block; 
+  margin-bottom: 0.5rem; 
 }
 
 .form-container {
-  background: #ffffff; /* Fondo blanco */
+  background: #ffffff;
   padding: 20px;
   border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
   width: 100%;
-  max-width: 400px; /* Ancho máximo */
+  max-width: 400px; 
   display: flex;
   flex-direction: column;
   gap: 100px;
@@ -202,32 +226,72 @@ label {
 }
 
 input {
-  padding: 10px;
-  margin-top: 5px;
-  margin-bottom: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  background-color: #f5f5f5;
-  font-size: 1em;
+  width: 100%; 
+  padding: 0.75rem;
+  margin-bottom: 1rem;
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+  font-size: 1rem;
+}
+
+form input:focus {
+  border-color: #83af82;
+  box-shadow: 0px 0px 4px #79ac92;
+  outline: none;
+}
+
+.form-select {
+  width: 100%;
+  padding: 0.75rem;
+  margin-bottom: 1rem;
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+  font-size: 1rem;
+  color: #4e4e4e;
+}
+
+form select:focus {
+  border-color: #83af82;
+  box-shadow: 0px 0px 4px #79ac92;
+  outline: none;
 }
 
 span.error {
-  color: red;
-  font-size: 0.875em;
+  display: block; 
+  font-size: 0.8rem; 
+  color: #d9534f; 
+  margin-top: -0.5rem; 
+  margin-bottom: 0.75rem; 
+  font-weight: 500; 
+  position: relative;
+  top: -5px;
+  background-color: #f8d7da; 
+  border: 1px solid #f5c6cb; 
+  padding: 0.3rem 0.5rem; 
+  border-radius: 4px;
 }
 
-button {
-  padding: 10px;
+.invalid-feedback {
+  font-size: 0.875rem; 
+  color: #dc3545; 
+  margin-top: 0.25rem; 
+}
+
+
+form button {
+  width: 50px;
+  font-size: 0.9rem;
+  background-color: #007bff; 
+  color: white;
   border: none;
-  border-radius: 4px;
-  /* background-color: #768164; */
-  color: #ffffff;
-  font-size: 1em;
   cursor: pointer;
+  transition: background-color 0.6s;
+  border-radius: 50px;
 }
 
 button:hover  {
   background-color: #3e4e25;
   cursor: not-allowed;
 }
+
 </style>
