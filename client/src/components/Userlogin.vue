@@ -31,7 +31,7 @@ import { defineComponent, ref } from 'vue';
 import { useAuthStore } from '@/stores/authstore';
 import { useRouter } from 'vue-router';
 export default defineComponent({
-  name: 'Login',
+  name: 'UserLogin',
   setup() {
     const email = ref('');
     const password = ref('');
@@ -44,9 +44,8 @@ export default defineComponent({
         await authStore.login(email.value, password.value);
         alert("Sesión iniciada con éxito");
         router.push('/');
-      } catch (error: any) {
-        // Manejar error y mostrar mensaje al usuario
-        errorMessage.value = error.message || "Error desconocido al iniciar sesión.";
+      } catch (error) {
+        console.error("Error desconocido al iniciar sesión", error)
         alert(errorMessage.value);
       }
     };
