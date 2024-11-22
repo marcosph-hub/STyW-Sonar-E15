@@ -57,15 +57,19 @@ router.post("/login", async (req: Request, res: Response) => {
     const { email,password } = req.body;
     if(!email || !password || email === "" || password === "") 
       return res.status(400).json({message: 'User or password must to be proved'})
-
     const reqUser = await User.findOne({ email });
-    console.log(reqUser?.email);
-
-    if (reqUser?.email !== email || reqUser?.password  !== password) {
-      return res.status(404).json({ message: 'Login sesion faliled you must be register' });
+    if (!reqUser) {
+      return res.status(404).json({ message: 'User not found' });
     }
-    const json = jwt.sign({email},SECRET_KEY,{ expiresIn: TOKEN_EXPIRATION})
-    res.status(200).json({token: json,email: reqUser?.email,name: reqUser?.name });
+
+    const isPasswordValid = await bcrypt.compare(password, reqUser.password);
+    if (!isPasswordValid) {
+      return res.status(401).json({ message: 'Invalid password' });
+    }
+
+      const json = jwt.sign({email},SECRET_KEY,{ expiresIn: TOKEN_EXPIRATION})
+      res.status(200).json({token: json,email: reqUser?.email,name: reqUser?.name });
+
   } catch (error: unknown) {
     if (error instanceof Error) {
       console.error('Error:', error.message);

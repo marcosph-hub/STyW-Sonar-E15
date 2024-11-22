@@ -44,7 +44,7 @@ export const useAuthStore = defineStore('auth', {
               if (error.response && error.response.data) {
                 throw new Error(error.response.data.message  || "Error en el servidor");
               } else {
-                throw new Error(error);
+                throw new Error(error.response.data.message  || "Error en el servidor desconodido");
               }
             }
           },

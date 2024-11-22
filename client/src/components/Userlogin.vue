@@ -46,6 +46,8 @@ export default defineComponent({
         router.push('/');
       } catch (error) {
         console.error("Error desconocido al iniciar sesión", error)
+        if(error instanceof Error)
+           errorMessage.value = error.message
         alert(errorMessage.value);
       }
     };
