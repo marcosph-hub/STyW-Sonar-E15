@@ -3,7 +3,7 @@
       <div class="menu-container">
         <nav class="menu"> 
             <ul> 
-                <li><img src="./../../public/Study_Method.ico" alt="Method Study Logo" class="logo" /></li>
+                <li><img src="./../../Study_Method.ico" alt="Method Study Logo" class="logo" /></li>
             <li><h1 class="logo">Method Study</h1></li>
             <li><router-link to="/">Inicio</router-link></li>
             <li><router-link to="/about">Acerca de </router-link></li>

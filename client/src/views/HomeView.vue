@@ -27,19 +27,19 @@ onMounted(() =>
 
 
 <style>
-/* Clases de transición */
+/* Transition */
 .slide-enter-active, .slide-leave-active {
   transition: transform 0.5s ease, opacity 0.5s ease;
 }
 
 .slide-enter-from {
-  transform: translateX(-100%); /* Posición inicial: Fuera de la pantalla a la izquierda */
-  opacity: 0; /* Invisible inicialmente */
+  transform: translateX(-100%); 
+  opacity: 0; 
 }
 
 .slide-enter-to {
-  transform: translateX(0); /* Posición final: En su lugar */
-  opacity: 1; /* Completamente visible */
+  transform: translateX(0); 
+  opacity: 1; 
 }
 
 .slide-leave-from {

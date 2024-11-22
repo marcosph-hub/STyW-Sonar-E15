@@ -1,26 +1,32 @@
 <script setup lang="ts">
 import { RouterView } from 'vue-router'
-//import HelloWorld from './components/HelloWorld.vue'
-import { ref, onMounted } from 'vue'; 
-const show = ref(false); 
-// Inicialmente está oculto 
-onMounted(() => 
-{ 
-  show.value = true; 
-});
-
 
 </script>
 
 <template>
   <header>
-    <RouterView />
+    <!-- <nav>
+      <RouterLink class="link-success link-underline-opacity-0" to="/">Home</RouterLink>
+      <RouterLink class="link-success link-underline-opacity-0" to="/about">About</RouterLink>
+      <RouterLink class="link-success link-underline-opacity-0" to="/register">Register</RouterLink>
+      <RouterLink class="link-success link-underline-opacity-0" to="/users">Users</RouterLink>
+    </nav> -->
   </header>
    <main>
+    <div id="Mostrar titulo"></div>
+    <RouterView />
+
+    
    </main>
    
 </template>
 <style scoped>
+
+body {
+  background-color: #344E41;
+}
+
+
 header {
   line-height: 1.5;
   max-height: 100vh;
