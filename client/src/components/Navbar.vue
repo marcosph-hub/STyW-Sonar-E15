@@ -104,13 +104,12 @@ margin-right: 10px; /* Ajusta el espacio entre el logo y el texto */
 
 .auth-buttons button {
 background-color: #507757;
-
 color: white;
 border: none;
 padding: 6px 10px;
 border-radius: 20px;
 cursor: pointer;
-transition: background-color 0.3s ease;
+transition: background-color 0.4s;
 font-size: 0.9rem;
 }
 
@@ -119,8 +118,8 @@ font-size: 0.9rem;
 }
 
 .auth-buttons button:hover {
-  background-color: #A3B18A;
-  margin-top: 4px;
+  background-color: #23352c;
+  margin-top: 2px;
 }
 
 </style>
