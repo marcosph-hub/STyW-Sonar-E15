@@ -25,7 +25,7 @@
             type="password"
             class="form-control"
             :class="{ 'is-invalid': errores.password }"
-            placeholder="Enter a secure password"
+            placeholder="Enter a password"
           />
           <div class="invalid-feedback">{{ errores.password }}</div>
         </div>
@@ -174,7 +174,6 @@ export default defineComponent({
   padding: 20px;
   background-color: #151B23;
   border-radius: 8px;
-  
   min-height: 100vh;
   
 }
@@ -238,6 +237,7 @@ input {
   font-size: 1rem;
   /* background-color: #151B23; */
   background-color: #353e49;
+  
 }
 
 input::placeholder {
@@ -249,6 +249,7 @@ form input:focus {
   border-color: #83af82;
   box-shadow: 0px 0px 4px #79ac92;
   outline: none;
+  color: #83af82;
   background-color: #151B23;
 }
 

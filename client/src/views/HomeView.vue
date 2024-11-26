@@ -32,6 +32,11 @@ onMounted(() =>
   transition: transform 0.5s ease, opacity 0.5s ease;
 }
 
+
+main {
+  color: #8bb8ac
+}
+
 .slide-enter-from {
   transform: translateX(-100%); 
   opacity: 0; 
