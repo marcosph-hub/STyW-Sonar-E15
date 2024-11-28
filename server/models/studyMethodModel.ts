@@ -19,14 +19,10 @@ const StudyMethodSchema = new Schema ({
         required: true
     },
     defaultSettings: {
-        workDuration: { 
-            type: Number
-        },
-        breakDuration: {
-            type: Number
-        }
-    },
-})
+        workDuration: Number,
+        breakDuration: Number
+    }
+});
 
 const StudyMethodModel = mongoose.model<StudyMethodInterface>('StudyMethodModel', StudyMethodSchema);
 export default StudyMethodModel;
