@@ -1,55 +1,81 @@
+import mongoose from 'mongoose';
+import { MongoMemoryServer } from 'mongodb-memory-server';
 import StudyMethodModel from '../models/studyMethodModel';
 
-describe('StudyMethod Model', () => {
-  it('should require a name', () => {
-    const method = new StudyMethodModel({
-      description: 'Técnica para mejorar la productividad',
-      defaultSettings: {
-        workDuration: 25,
-        breakDuration: 5,
-      },
-    });
+let mongoServer: MongoMemoryServer;
 
-    const error = method.validateSync();
-    expect(error?.errors['name']).toBeDefined();
+beforeAll(async () => {
+    mongoServer = await MongoMemoryServer.create();
+    const mongoUri = mongoServer.getUri();
+    console.log("Connecting to MongoDB at: ",mongoUri);
+    await mongoose.connect(mongoUri);
+});
+
+afterAll(async () => {
+    await mongoose.disconnect();
+    await mongoServer.stop();
+});
+
+describe('StudyMethodModel Tests', () => {
+  beforeEach(async () => {
+      await StudyMethodModel.deleteMany({});
   });
 
-  it('should require a description', () => {
-    const method = new StudyMethodModel({
-      name: 'Pomodoro',
-      defaultSettings: {
-        workDuration: 25,
-        breakDuration: 5,
-      },
-    });
+  test('debe crear un método de estudio válido', async () => {
+      const validStudyMethod = {
+          name: 'Pomodoro',
+          description: 'Técnica de estudio con intervalos',
+          defaultSettings: {
+              workDuration: 25,
+              breakDuration: 5
+          }
+      };
 
-    const error = method.validateSync();
-    expect(error?.errors['description']).toBeDefined();
+      const savedStudyMethod = await StudyMethodModel.create(validStudyMethod);
+      expect(savedStudyMethod._id).toBeDefined();
+      expect(savedStudyMethod.name).toBe(validStudyMethod.name);
+      expect(savedStudyMethod.description).toBe(validStudyMethod.description);
+      expect(savedStudyMethod.defaultSettings.workDuration).toBe(validStudyMethod.defaultSettings.workDuration);
+      expect(savedStudyMethod.defaultSettings.breakDuration).toBe(validStudyMethod.defaultSettings.breakDuration);
   });
 
-  it('should require default settings with work and break durations', () => {
-    const method = new StudyMethodModel({
-      name: 'Pomodoro',
-      description: 'Técnica para mejorar la productividad',
-    });
+  test('debe fallar al crear un método sin nombre', async () => {
+      const invalidStudyMethod = {
+          description: 'Método sin nombre',
+          defaultSettings: {
+              workDuration: 30,
+              breakDuration: 10
+          }
+      };
 
-    const error = method.validateSync();
-    expect(error?.errors['defaultSettings.workDuration']).toBeDefined();
-    expect(error?.errors['defaultSettings.breakDuration']).toBeDefined();
+      await expect(StudyMethodModel.create(invalidStudyMethod))
+          .rejects
+          .toThrow();
   });
 
-  it('should save a valid study method', async () => {
-    const method = new StudyMethodModel({
-      name: 'Pomodoro',
-      description: 'Técnica para mejorar la productividad',
-      defaultSettings: {
-        workDuration: 25,
-        breakDuration: 5,
-      },
-    });
+  test('debe fallar al crear un método sin descripción', async () => {
+      const invalidStudyMethod = {
+          name: 'Método Test',
+          defaultSettings: {
+              workDuration: 30,
+              breakDuration: 10
+          }
+      };
 
-    const savedMethod = await method.save();
-    expect(savedMethod._id).toBeDefined();
-    expect(savedMethod.name).toBe('Pomodoro');
+      await expect(StudyMethodModel.create(invalidStudyMethod))
+          .rejects
+          .toThrow();
+  });
+
+  test('debe permitir crear un método sin configuraciones por defecto', async () => {
+      const studyMethod = {
+          name: 'Método Simple',
+          description: 'Un método simple sin configuraciones'
+      };
+
+      const savedStudyMethod = await StudyMethodModel.create(studyMethod);
+      expect(savedStudyMethod._id).toBeDefined();
+      expect(savedStudyMethod.defaultSettings.workDuration).toBeUndefined();
+      expect(savedStudyMethod.defaultSettings.breakDuration).toBeUndefined();
   });
 });
