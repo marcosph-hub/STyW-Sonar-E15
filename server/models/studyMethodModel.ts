@@ -9,15 +9,14 @@ interface StudyMethodInterface extends Document {
     };
 }
 
-
 const StudyMethodSchema = new Schema ({
     name:{
         type: String,
-        require: true
+        required: true
     },
     description: {
         type: String,
-        require: true
+        required: true
     },
     defaultSettings: {
         workDuration: { 
@@ -30,5 +29,4 @@ const StudyMethodSchema = new Schema ({
 })
 
 const StudyMethodModel = mongoose.model<StudyMethodInterface>('StudyMethodModel', StudyMethodSchema);
- 
 export default StudyMethodModel;
