@@ -23,8 +23,8 @@ describe('UserPreferences Model Test', () => {
     describe('Validación del Modelo', () => {
         test('debe crear preferencias de usuario válidas', async () => {
             const validUserPreferences = {
-                email: 'test@test.com',
-                preferedMethod: new mongoose.Types.ObjectId(),
+                userId: new mongoose.Types.ObjectId(),
+                methodId: new mongoose.Types.ObjectId(),
                 customSettings: {
                     workDuration: 25,
                     breakDuration: 5
@@ -35,15 +35,15 @@ describe('UserPreferences Model Test', () => {
             const savedUserPreferences = await userPreferences.save();
             
             expect(savedUserPreferences._id).toBeDefined();
-            expect(savedUserPreferences.email).toEqual(validUserPreferences.email);
-            expect(savedUserPreferences.preferedMethod).toEqual(validUserPreferences.preferedMethod);
+            expect(savedUserPreferences.userId).toEqual(validUserPreferences.userId);
+            expect(savedUserPreferences.methodId).toEqual(validUserPreferences.methodId);
             expect(savedUserPreferences.customSettings?.workDuration).toBe(25);
             expect(savedUserPreferences.customSettings?.breakDuration).toBe(5);
         });
 
-        test('debe fallar al crear preferencias sin email', async () => {
-            const userPreferencesWithoutEmail = {
-                preferedMethod: new mongoose.Types.ObjectId(),
+        test('debe fallar al crear preferencias sin userId', async () => {
+            const userPreferencesWithoutUserId = {
+                methodId: new mongoose.Types.ObjectId(),
                 customSettings: {
                     workDuration: 25,
                     breakDuration: 5
@@ -51,14 +51,14 @@ describe('UserPreferences Model Test', () => {
             };
 
             await expect(async () => {
-                const userPreferences = new UserPreferencesModel(userPreferencesWithoutEmail);
+                const userPreferences = new UserPreferencesModel(userPreferencesWithoutUserId);
                 await userPreferences.save();
             }).rejects.toThrow(mongoose.Error.ValidationError);
         });
 
-        test('debe fallar al crear preferencias sin preferedMethod', async () => {
-            const userPreferencesWithoutMethod = {
-                email: 'test@test.com',
+        test('debe fallar al crear preferencias sin methodId', async () => {
+            const userPreferencesWithoutMethodId = {
+                userId: new mongoose.Types.ObjectId(),
                 customSettings: {
                     workDuration: 25,
                     breakDuration: 5
@@ -66,7 +66,7 @@ describe('UserPreferences Model Test', () => {
             };
 
             try {
-                const userPreferences = new UserPreferencesModel(userPreferencesWithoutMethod);
+                const userPreferences = new UserPreferencesModel(userPreferencesWithoutMethodId);
                 await userPreferences.save();
             } catch (error) {
                 expect(error).toBeDefined();
@@ -75,8 +75,8 @@ describe('UserPreferences Model Test', () => {
 
         test('debe permitir crear preferencias sin customSettings', async () => {
             const userPreferencesWithoutCustomSettings = {
-                email: 'test@test.com',
-                preferedMethod: new mongoose.Types.ObjectId()
+                userId: new mongoose.Types.ObjectId(),
+                methodId: new mongoose.Types.ObjectId()
             };
 
             const userPreferences = new UserPreferencesModel(userPreferencesWithoutCustomSettings);
