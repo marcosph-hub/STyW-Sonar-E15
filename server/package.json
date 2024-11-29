@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "dev": "nodemon --watch src --ext ts --exec ts-node ./server.ts",
     "start": "ts-node ./server"
   },
@@ -24,6 +24,7 @@
     "nodemon": "^3.1.7"
   },
   "devDependencies": {
-    "@types/bcrypt": "^5.0.2"
+    "@types/bcrypt": "^5.0.2",
+    "@types/supertest": "^6.0.2"
   }
 }

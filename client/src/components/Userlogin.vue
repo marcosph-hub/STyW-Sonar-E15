@@ -1,29 +1,32 @@
 <template>
-  <div class="login-container">
-    <form class="login-form" @submit.prevent="handleSubmit">
-      <h2>Iniciar Sesión</h2>
+  <main class="main-container">
+    <div class="login-container mt-5">
+    <form class="login-form card p-4 shadow" @submit.prevent="handleSubmit">
+      <h2>Sign In</h2>
       <div class="form-group">
-        <label for="email">Correo Electrónico</label>
+        <label for="email" class="form-label">Email</label>
         <input
           type="email"
           id="email"
           v-model="email"
-          placeholder="Escribe tu correo"
+          placeholder="Introduce your email address"
         />
-      </div>
-      <div class="form-group">
-        <label for="password">Contraseña</label>
-        <input
-          type="password"
-          id="password"
-          v-model="password"
-          placeholder="Escribe tu contraseña"
-        />
-      </div>
-      <button type="submit">Iniciar seción</button>
-      <p v-if="errorMessage">{{ errorMessage }}</p>
-    </form>
-  </div>
+        </div>
+        <div class="form-group">
+          <label for="password" class="form-label">Password</label>
+          <input
+            type="password"
+            id="password"
+            v-model="password"
+            placeholder="Introduce your password"
+          />
+        </div>
+        <button type="submit">Iniciar seción</button>
+        <p v-if="errorMessage">{{ errorMessage }}</p>
+      </form>
+    </div>
+  </main>
+
 </template>
 
 <script lang="ts">
@@ -64,47 +67,83 @@ export default defineComponent({
 
 <style scoped>
 /* Estilo básico del cuerpo */
-body {
-  margin: 0;
-  padding: 0;
-  display: flex;
-  justify-content: center; /* Centrar horizontalmente */
-  align-items: center;    /* Centrar verticalmente */
-  height: 100vh;          /* Altura de la pantalla completa */
-  background-color: #f4f4f4; /* Color de fondo */
-  font-family: Arial, sans-serif;
-}
 
-/* Contenedor principal */
-.login-container {
-  margin-left: 40vh;
-  background-color: #fff; /* Fondo blanco */
-  padding: 30px;          /* Espaciado interno */
-  border: 1px solid #ccc; /* Borde gris claro */
-  border-radius: 10px;    /* Bordes redondeados */
-  height: 60vh;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra sutil */
-  width: 50vh;           /* Ancho fijo */
+.card {
+  width: 150%; /* Ocupará el 90% del contenedor */
+  max-width: 500px; /* No excederá los 500px */
+  border-radius: 20px;
+  border-color: #151B23;
+  background-color: #1f2731;
+  margin: 0 auto; /* Centra horizontalmente */
 }
 
 /* Encabezado del formulario */
-.login-form h2 {
-  margin-bottom: 20px;
+h2 {
+  font-size: 1.9rem;
+  margin-bottom: 20px; 
   text-align: center;
-  color: #333;
+  font-weight: 540;
+  color: #588157;
 }
 
-/* Estilo de los grupos de formulario */
-.form-group {
-  margin-bottom: 15px;
+form {
+  width: 100%; 
+  max-width: 400px;
+  margin: 3rem auto; 
+  padding: 2rem 1.5rem; 
+  border: 1px solid #ddd;
+  border-radius: 8px; 
+  background-color: #fff;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); 
 }
 
-/* Etiquetas */
-.form-group label {
-  display: block;         /* Asegura que esté encima del input */
-  margin-bottom: 30px;
-  font-size: 14px;
-  color: #555;
+
+
+form div {
+  margin-bottom: 10px;
+}
+
+form label {
+  font-size: 0.9rem; 
+  font-weight: 600; 
+  color: #588157;
+  display: block; 
+  margin-bottom: 0.5rem; 
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+input {
+  width: 100%; 
+  padding: 0.75rem;
+  margin-bottom: 1rem;
+  border-color: none;
+  border-radius: 10px;
+  font-size: 1rem;
+  /* background-color: #151B23; */
+  background-color: #353e49;
+  outline: none;
+  border: none;
+  box-shadow: none;
+  transition: box-shadow 0.3s ease-in-out;
+}
+
+input::placeholder {
+  color: #151B23;
+  opacity: 1;
+}
+
+form input:focus {
+  border-color: #83af82;
+  box-shadow: 0px 0px 4px #79ac92;
+  outline: none;
+  color: #83af82;
+  background-color: #151B23;
+  box-shadow: 0 0 5px #83af82
 }
 
 /* Campos de entrada */
@@ -117,21 +156,20 @@ body {
   box-sizing: border-box; /* Incluye padding y border en el ancho */
 }
 
-/* Botón de envío */
-button {
-  width: 100%;            /* Ocupa todo el ancho del contenedor */
-  padding: 10px;          /* Espaciado interno */
-  background-color: #007bff; /* Azul */
-  color: #fff;            /* Texto blanco */
-  border: none;           /* Sin borde */
-  border-radius: 5px;     /* Bordes redondeados */
-  font-size: 16px;        /* Tamaño de fuente */
-  cursor: pointer;        /* Cambia el cursor al pasar sobre el botón */
-  transition: background-color 0.3s; /* Transición suave al hover */
-  margin-top: 5vh;
+form button {
+  width: 100%; /* Ocupará todo el ancho del formulario */
+  padding: 10px;
+  font-size: 1rem;
+  background-color: #344E41; 
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.4s;
+  border-radius: 50px;
+  text-align: center;
 }
 
 button:hover {
-  background-color: #0056b3; /* Azul más oscuro al pasar el mouse */
+  background-color: #23352c;
 }
 </style>
