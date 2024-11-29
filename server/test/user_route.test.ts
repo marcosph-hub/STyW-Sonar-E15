@@ -1,15 +1,19 @@
 const request = require('supertest')
-import {app} from './../server'
+import {app,servers} from './../server'
 import mongoose from 'mongoose'
 import User from './../models/user_model'
 
+let server:any;
+
+
 describe('Probando la api rest de users',() =>{
   afterAll(async ()=>{
-
-    await mongoose.connection.close();
+    await mongoose.connection.close(true);
+    servers.close();
   })
   afterEach(async () =>{
     await User.deleteMany({});
+    jest.clearAllMocks();
   })
   beforeAll(async () =>{
     await mongoose.connection.close();

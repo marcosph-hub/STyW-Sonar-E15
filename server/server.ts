@@ -40,7 +40,9 @@ app.use(cors({
 }));
 // Routes
 app.use('/user',require("./routes/user_route"));
+app.use('/subject', require("./routes/subject_route"));
 
-app.listen(app.get("port"), () => {
+const servers =app.listen(app.get("port"), () => {
   console.log(`Server running at http://localhost:` + app.get("port"));
 });
+ export {servers};
