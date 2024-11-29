@@ -8,7 +8,7 @@ import cors from 'cors';
 // Cargar las variables de entorno
 dotenv.config();
 
-const app = express();
+export const app = express();
 const mongoURI = process.env.ATLAS_URI;
 app.use(morgan("dev"));
 
