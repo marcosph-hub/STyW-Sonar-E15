@@ -10,7 +10,7 @@ import methodRoutes from './routes/study_method_routes';
 // Cargar las variables de entorno
 dotenv.config();
 
-const app = express();
+export const app = express();
 const mongoURI = process.env.ATLAS_URI;
 app.use(morgan("dev"));
 
@@ -44,6 +44,10 @@ app.use(cors({
 // Routes
 app.use('/user',require("./routes/user_route"));
 app.use('/method', methodRoutes);
-app.listen(app.get("port"), () => {
+app.use('/subject', require("./routes/subject_route"));
+
+const servers = app.listen(app.get("port"), () => {
   console.log(`Server running at http://localhost:` + app.get("port"));
 });
+
+export {servers};
