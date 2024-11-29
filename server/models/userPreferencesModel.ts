@@ -1,8 +1,8 @@
 import { Schema, model, Types } from "mongoose";
 
 interface UserPreferencesInterface extends Document {
-    email: string;
-    preferedMethod: Types.ObjectId;
+    userId: Types.ObjectId;
+    methodId: Types.ObjectId;
     customSettings?: {
         workDuration?: number;
         breakDuration?: number;
@@ -10,11 +10,12 @@ interface UserPreferencesInterface extends Document {
 }
 
 const UserPreferencesSchema = new Schema<UserPreferencesInterface>({
-    email: {
-        type: String,
+    userId: {
+        type: Schema.Types.ObjectId,
+        ref: 'User',
         required: true
     },
-    preferedMethod: {
+    methodId: {
         type: Schema.Types.ObjectId,
         ref: 'StudyMethodModel',
         required: true
