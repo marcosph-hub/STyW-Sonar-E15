@@ -45,12 +45,12 @@ export default defineComponent({
     const handleSubmit = async () => {
       try {
         await authStore.login(email.value, password.value);
-        alert("Sesión iniciada con éxito");
-        router.push('/');
+        // alert("Sesión iniciada con éxito");
+        router.push('/method-selection');
       } catch (error) {
         console.error("Error desconocido al iniciar sesión", error)
         if(error instanceof Error)
-           errorMessage.value = error.message
+          errorMessage.value = error.message
         alert(errorMessage.value);
       }
     };
