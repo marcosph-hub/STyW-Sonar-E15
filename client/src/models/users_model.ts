@@ -12,7 +12,6 @@ export interface UsersInterfaces{
 
 /** class user */
 export class User implements UsersInterfaces{
-     
     constructor(
       public name: string,
       public email: string,
