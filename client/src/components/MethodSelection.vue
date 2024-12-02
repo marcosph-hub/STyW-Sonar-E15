@@ -5,8 +5,8 @@
             <div v-for="method in methods" :key="method.name" class="method-card">
                 <h3>{{ method.name }}</h3>
                 <p>{{ method.description }}</p>
-                <p>Tiempo de estudio: {{ method.time_study }} minutos</p>
-                <p>Tiempo de descanso: {{ method.time_break }} minutos</p>
+                <p style="font-weight: bold;">Tiempo de estudio: <span class="work-duration">{{ method.workDuration }}</span> minutos</p>
+                <p style="font-weight: bold;">Tiempo de descanso: <span class="break-duration">{{ method.breakDuration }}</span> minutos</p>
                 <button @click="selectMethod(method)">Seleccionar</button>
             </div>
         </div>
@@ -14,24 +14,25 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue';
+import { defineComponent, onMounted } from 'vue';
 import { MethodStudy } from '@/models/methodstudy_model';
+import { useMethodsStore } from '@/stores/methods_store';
 
 export default defineComponent({
     name: 'MethodSelection',
     setup() {
-        const methods = ref<MethodStudy[]>([
-            new MethodStudy('Pomodoro', 25, 5, 'Método de estudio con intervalos de 25 minutos de trabajo y 5 minutos de descanso.'),
-            new MethodStudy('Técnica de 50/10', 50, 10, 'Método de estudio con intervalos de 50 minutos de trabajo y 10 minutos de descanso.'),
-            new MethodStudy('Estudio Continuo', 90, 20, 'Método de estudio con intervalos de 90 minutos de trabajo y 20 minutos de descanso.')
-        ]);
+        const methodsStore = useMethodsStore();
+
+        onMounted(() => {
+            methodsStore.getMethods();
+        });
 
         const selectMethod = (method: MethodStudy) => {
             alert(`Has seleccionado el método: ${method.name}`);
         };
 
         return {
-            methods,
+            methods: methodsStore.methods,
             selectMethod
         };
     }
@@ -51,16 +52,17 @@ export default defineComponent({
 }
 
 .method-card {
-    border: 1px solid #ccc;
+    border: 1px solid #0a4f58;
     border-radius: 10px;
     padding: 20px;
     width: 30%;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 20px rgba(255, 255, 255, 0.1);
 }
 
 .method-card h3 {
     margin-top: 0;
-    color: #344E41;
+    color: #2b7288;
+    font-weight: bold;
 }
 
 .method-card p {
@@ -78,6 +80,18 @@ export default defineComponent({
 }
 
 .method-card button:hover {
-    background-color: #23352c;
+    background-color: #3d9669;
+}
+
+.work-duration {
+    color: #3d9669;
+    font-weight: bold;
+    font-size: 1.2em;
+}
+
+.break-duration {
+    color: #2788a5;
+    font-weight: bold;
+    font-size: 1.2em;
 }
 </style>
