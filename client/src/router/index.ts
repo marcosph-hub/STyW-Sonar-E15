@@ -1,10 +1,9 @@
 import { createRouter, createWebHistory } from 'vue-router'
-// import HomeViewDefault from '../views/HomeViewDefault.vue'
 import HomeView from '../views/HomeView.vue'
 import UserList from '@/components/UserList.vue'
 import RegisterUser from '@/views/RegisterView.vue'
 import Loginview from '@/views/LoginView.vue'
-
+import MethodSelectView from '@/views/MethodSelectView.vue'
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -32,6 +31,11 @@ const router = createRouter({
       path: '/login',
       name: 'UserLogin',
       component: Loginview
+    },
+    {
+      path: '/method-selection',
+      name: 'MethodSelection',
+      component: MethodSelectView
     }
   ],
 })
