@@ -12,7 +12,7 @@
             <ul>
               <!-- Si el usuario está autenticado -->
               <li v-if="auth.isAuthenticated">
-                <h2>Bienvenido, {{ auth.name }}</h2>
+                <h3>Bienvenido, {{ auth.name }}</h3>
               </li>
               <li v-else>
                 <button @click="handleLogin">Iniciar Sesión</button>
@@ -34,42 +34,42 @@
   </header>
 </template>
 <script lang="ts">
- import { defineComponent } from "vue";
- import { useAuthStore } from "@/stores/authstore"; // Tu store de autenticación
- import { useRouter } from "vue-router";
- 
- export default defineComponent({
-   name: "Navbar",
-   setup() {
-     const auth = useAuthStore(); // Accede al store de autenticación
-     const router = useRouter(); // Router para navegar entre vistas
- 
- 
-     const handleLogin = () => {
-       router.push("/login"); // Redirige a la página de inicio de sesión
-     };
- 
- 
-     const handleRegister = () => {
-       router.push("/register"); // Redirige a la página de registro
-     };
- 
- 
-     const handleLogout = async () => {
-       await auth.logout(); // Cierra sesión a través del store
-       router.push("/"); // Redirige al inicio después de cerrar sesión
-     };
- 
- 
-     return {
-       auth, // Acceso al estado reactivo del store
-       handleLogin,
-       handleRegister,
-       handleLogout,
-     };
-   },
- });
- </script>
+import { defineComponent } from "vue";
+import { useAuthStore } from "@/stores/authstore"; // Tu store de autenticación
+import { useRouter } from "vue-router";
+
+export default defineComponent({
+  name: "Navbar",
+  setup() {
+    const auth = useAuthStore(); // Accede al store de autenticación
+    const router = useRouter(); // Router para navegar entre vistas
+
+
+    const handleLogin = () => {
+      router.push("/login"); // Redirige a la página de inicio de sesión
+    };
+
+
+    const handleRegister = () => {
+      router.push("/register"); // Redirige a la página de registro
+    };
+
+
+    const handleLogout = async () => {
+      await auth.logout(); // Cierra sesión a través del store
+      router.push("/"); // Redirige al inicio después de cerrar sesión
+    };
+
+
+    return {
+      auth, // Acceso al estado reactivo del store
+      handleLogin,
+      handleRegister,
+      handleLogout,
+    };
+  },
+});
+</script>
 
 <style scoped>
 .menu-bar {
@@ -133,6 +133,11 @@ margin-right: 10px; /* Ajusta el espacio entre el logo y el texto */
 .menu ul li a:hover {
   color: #A3B18A;
   margin-top: 4px;
+}
+
+.menu h3{
+  margin-top: 10px;
+  font-size: 1.2rem;
 }
 
 
