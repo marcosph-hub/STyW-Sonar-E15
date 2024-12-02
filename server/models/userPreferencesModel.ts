@@ -3,10 +3,10 @@ import { Schema, model, Types } from "mongoose";
 interface UserPreferencesInterface extends Document {
     userId: Types.ObjectId;
     methodId: Types.ObjectId;
-    customSettings?: {
-        workDuration?: number;
-        breakDuration?: number;
-    };
+    workDuration?: number;
+    breakDuration?: number;
+    createdAt: Date;
+    updatedAt: Date;
 }
 
 const UserPreferencesSchema = new Schema<UserPreferencesInterface>({
@@ -20,10 +20,10 @@ const UserPreferencesSchema = new Schema<UserPreferencesInterface>({
         ref: 'StudyMethodModel',
         required: true
     },
-    customSettings: {
-        workDuration: { type: Number },
-        breakDuration: { type: Number }
-    }
+    workDuration: { type: Number },
+    breakDuration: { type: Number }
+}, {
+    timestamps: true
 });
 
 const UserPreferencesModel = model<UserPreferencesInterface>('UserPreferencesModel', UserPreferencesSchema);
