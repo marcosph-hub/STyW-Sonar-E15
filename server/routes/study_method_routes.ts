@@ -9,7 +9,7 @@ const router = express.Router();
 
 router.get("/", async (req: Request, res: Response) => {
     try {
-        const studyMethods = await StudyMethodModel.find();
+        const studyMethods = await StudyMethodModel.find({}, 'name description workDuration breakDuration');
         res.status(200).json(studyMethods);
     } catch (error) {
         if (error instanceof Error) {
@@ -19,6 +19,35 @@ router.get("/", async (req: Request, res: Response) => {
         }
     }
 });
+router.put("/:id", async (req: Request, res: Response) => {
+    try {
+        const { id } = req.params;
+        const { name, description, workDuration, breakDuration } = req.body;
+
+        if (!name || !description || workDuration === undefined || breakDuration === undefined) {
+            return res.status(400).json({ error: 'Todos los campos son requeridos' });
+        }
+
+        const updatedMethod = await StudyMethodModel.findByIdAndUpdate(
+            id,
+            { name, description, workDuration, breakDuration },
+            { new: true }
+        );
+
+        if (!updatedMethod) {
+            return res.status(404).json({ error: 'Método de estudio no encontrado' });
+        }
+
+        res.status(200).json(updatedMethod);
+    } catch (error) {
+        if (error instanceof Error) {
+            res.status(500).json({ error: error.message });
+        } else {
+            res.status(500).json({ error: 'Error Interno del Servidor' });
+        }
+    }
+});
+
 
 router.post("/", async (req: Request, res: Response) => {
     try {
@@ -60,7 +89,7 @@ router.get("/preferences/:userId", async (req: Request, res: Response) => {
 
 router.post("/preferences", async (req: Request, res: Response) => {
     try {
-        const { userId, methodId, customSettings } = req.body;
+        const { userId, methodId, workDuration, breakDuration } = req.body;
 
         const userExists = await User.findById(userId);
         if (!userExists) {
@@ -75,7 +104,8 @@ router.post("/preferences", async (req: Request, res: Response) => {
         const newPreferences = new UserPreferencesModel({
             userId,
             methodId,
-            customSettings
+            workDuration,
+            breakDuration
         });
 
         const savedPreferences = await newPreferences.save();
