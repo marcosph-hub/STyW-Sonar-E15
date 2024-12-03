@@ -4,7 +4,7 @@ name: Deploy Vue App to Firebase Hosting
 on:
   push:
     branches:
-      - main  # Ejecutar cuando haya un push en la rama main
+      - dev  # Ejecutar cuando haya un push en la rama main
 
 
 jobs:
