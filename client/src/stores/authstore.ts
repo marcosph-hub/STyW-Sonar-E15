@@ -17,7 +17,7 @@ export const useAuthStore = defineStore('auth', {
     }),
 
     actions: {
-         async login(email: string, password: string): Promise<void> {
+        async login(email: string, password: string): Promise<void> {
             // Validar que email y password no estan vacíos
             if (!email || !password) {
               throw new Error("Email y contraseña son requeridos");
@@ -29,17 +29,20 @@ export const useAuthStore = defineStore('auth', {
               this.token = response.data.token;
               this.email = response.data.email; 
               this.name = response.data.name;
+              const userId = response.data.userID;
+              sessionStorage.setItem('loggedUserId', userId);
               if (this.token) {
                 this.isAuthenticated = true;
       
                 // Guardar token en localStorage y configurar en Axios
                 localStorage.setItem('token', this.token);
+                //localStorage.setItem('loggedUserId', userId);
                 axios.defaults.headers.common['Authorization'] = `Bearer ${this.token}`;
                 return;
               } else {
                 throw new Error("Error al iniciar sesión: El servidor no devolvió un token");
               }
-            } catch (error: any) {
+            } catch (error) {
               // Manejar errores del servidor o de conexión
               if (error.response && error.response.data) {
                 throw new Error(error.response.data.message  || "Error en el servidor");
@@ -47,7 +50,7 @@ export const useAuthStore = defineStore('auth', {
                 throw new Error(error.response.data.message  || "Error en el servidor desconodido");
               }
             }
-          },
+        },
 
         async logout() {
             this.email = undefined;
@@ -57,6 +60,7 @@ export const useAuthStore = defineStore('auth', {
 
             // Eliminar token del localStorage
             localStorage.removeItem('token');
+            sessionStorage.removeItem('loggedUserId');
             delete axios.defaults.headers.common['Authorization'];
 
             console.log("Sesión cerrada");
@@ -74,5 +78,9 @@ export const useAuthStore = defineStore('auth', {
 
     getters: {
         isLoggedIn: (state) => state.isAuthenticated,
+
+        loggedUserId: (): string | null => {
+          return sessionStorage.getItem('loggedUserId');
+        }
     },
 });
