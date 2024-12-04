@@ -24,29 +24,32 @@ import { useMethodsStore } from '@/stores/methods_store'
 import { usePreferencesStore } from '@/stores/userPreferences_store'
 import { useUsersStore } from '@/stores/users_store'
 import { useAuthStore } from '@/stores/authstore'
+import { useRouter } from 'vue-router'
 import { Types } from 'mongoose'
 
 export default defineComponent({
     name: 'MethodSelection',
     setup() {
         const methodsStore = useMethodsStore()
-    const preferencesStore = usePreferencesStore()
-    const userStore = useUsersStore()
-    const authStore = useAuthStore()
-    const userIDString = authStore.loggedUserId
-    onMounted(async () => { 
-        await methodsStore.getMethods()
-        await userStore.getUsers()
-    })
-    const selectMethod = async (method: MethodStudy) => {
-        try {
-            const userID = new Types.ObjectId(userIDString)
-            alert(`Has seleccionado el método: ${method.name}`)
-            await preferencesStore.addUserPreferences(userID, method._id)
-        } catch (error) {
-            console.error('Error al seleccionar el método', error)
+        const preferencesStore = usePreferencesStore()
+        const userStore = useUsersStore()
+        const authStore = useAuthStore()
+        const router = useRouter()
+        const userIDString = authStore.loggedUserId
+        onMounted(async () => { 
+            await methodsStore.getMethods()
+            await userStore.getUsers()
+        })
+        const selectMethod = async (method: MethodStudy) => {
+            try { 
+                const userID = new Types.ObjectId(userIDString)
+                alert(`Has seleccionado el método: ${method.name}`)
+                await preferencesStore.addUserPreferences(userID, method._id)
+                router.push('/timer')
+            } catch (error) {
+                console.error('Error al seleccionar el método', error)
+            }
         }
-    }
 
         return {
             methods: methodsStore.methods,
