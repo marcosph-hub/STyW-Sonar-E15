@@ -296,7 +296,7 @@ span.error {
 form button {
   width: 50px;
   font-size: 0.9rem;
-  background-color: #007bff; 
+  background-color: #4c7761; 
   color: white;
   border: none;
   cursor: pointer;
@@ -307,6 +307,8 @@ form button {
 button:hover  {
   background-color: #344E41;
   cursor: not-allowed;
+  border-color: #83af82;
+  box-shadow: 0px 0px 4px #79ac92;
 }
 
 </style>
