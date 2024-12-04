@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia';
 import axios from 'axios';
+import { useTimerStore } from './timer_store';
 
 export interface AuthState { 
     email: string | undefined;
@@ -53,6 +54,9 @@ export const useAuthStore = defineStore('auth', {
         },
 
         async logout() {
+            const timerStore = useTimerStore();
+            timerStore.resetTimer();
+
             this.email = undefined;
             this.token = undefined;
             this.isAuthenticated = false;
@@ -65,15 +69,6 @@ export const useAuthStore = defineStore('auth', {
 
             console.log("Sesión cerrada");
         },
-
-        /*async fetchProtectedData() {
-            try {
-                const response = await axios.get('http://localhost:3000/protected');
-                console.log("Datos protegidos:", response.data);
-            } catch (error) {
-                console.error("Error al acceder a datos protegidos");
-            }
-        },*/
     },
 
     getters: {
