@@ -127,5 +127,11 @@ export const useUsersStore = defineStore('User',()=>{
       console.error(error.value); // Registrar el error en la consola para depuración
     }
   }
-  return {user, error, errorMessage ,registerUser, getUsers, putUser, deleteUserByID}
+
+  function getLoggedUserId(): string | null {
+    const loggedUserId = localStorage.getItem('loggedUserId');
+    return loggedUserId ? loggedUserId : null;
+  }
+
+  return {user, error, errorMessage ,registerUser, getUsers, putUser, deleteUserByID, getLoggedUserId}
 })
