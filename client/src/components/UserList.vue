@@ -6,7 +6,6 @@
         <p>{{ user.name }} - {{ user.email }} - {{ user.role }}</p>
       </li>
     </ul>
-    <!-- Usar error.value en lugar de error -->
     <p v-if="errorMessage" class="error">{{ errorMessage }}</p>
 
   </div>
@@ -20,14 +19,14 @@ export default defineComponent({
   setup() {
     const usersStore = useUsersStore();
 
-    // Cargar la lista de usuarios cuando el componente se monta
+
     onMounted(() => {
       usersStore.getUsers();
     });
 
     return {
       users: usersStore.user,
-      errorMessage: usersStore.errorMessage,  // `error` es un ref, debes acceder a `.value` en el template
+      errorMessage: usersStore.errorMessage,
     };
   },
 });
