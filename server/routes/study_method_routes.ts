@@ -50,11 +50,11 @@ router.put("/:id", async (req: Request, res: Response) => {
 
 router.post("/", async (req: Request, res: Response) => {
     try {
-        const { name, description } = req.body;
+        const { name, description, workDuration, breakDuration } = req.body;
         if (!name) {
             return res.status(400).json({ error: 'El nombre es requerido' });
         }
-        const newMethod = new StudyMethodModel({ name, description });
+        const newMethod = new StudyMethodModel({ name, description, workDuration, breakDuration });
         const savedMethod = await newMethod.save();
         res.status(201).json(savedMethod);
     } catch (error) {
@@ -69,13 +69,35 @@ router.post("/", async (req: Request, res: Response) => {
 router.get("/preferences/:userId", async (req: Request, res: Response) => {
     try {
         const { userId } = req.params;
-        const preferences = await UserPreferencesModel.findOne({ userId })
+        const preferences = await UserPreferencesModel.find({ userId })
+            .sort({ createdAt: -1 })
+            .limit(1)
             .populate('userId', '_id')
-            .populate('methodId', '_id name workDuration breakDuration'); // encapsulamiento de datos para mandar al front
+            .populate('methodId', '_id name workDuration breakDuration');
         
-        if (!preferences) {
+        if (!preferences || preferences.length === 0) {
             return res.status(404).json({ error: 'Preferencias no encontradas' });
         }
+        res.status(200).json(preferences[0]);
+    } catch (error) {
+        if (error instanceof Error) {
+            res.status(500).json({ error: error.message });
+        } else {
+            res.status(500).json({ error: 'Error Interno del Servidor' });
+        }
+    }
+});
+
+router.get("/preferences", async (req: Request, res: Response) => {
+    try {
+        const preferences = await UserPreferencesModel.find()
+            .populate('userId', '_id name email')
+            .populate('methodId', '_id name workDuration breakDuration');
+
+        if (!preferences || preferences.length === 0) {
+            return res.status(404).json({ error: 'No se encontraron preferencias' });
+        }
+
         res.status(200).json(preferences);
     } catch (error) {
         if (error instanceof Error) {
@@ -85,6 +107,7 @@ router.get("/preferences/:userId", async (req: Request, res: Response) => {
         }
     }
 });
+
 
 router.post("/preferences", async (req: Request, res: Response) => {
     try {
@@ -145,6 +168,21 @@ router.delete("/preferences/:userId", async (req: Request, res: Response) => {
         }
     }
 });
+
+router.delete("/preferences", async (req: Request, res: Response) => {
+    try {
+        await UserPreferencesModel.deleteMany({});
+
+        res.status(200).json({ message: 'Todas las preferencias de usuario han sido eliminadas correctamente' });
+    } catch (error) {
+        if (error instanceof Error) {
+            res.status(500).json({ error: error.message });
+        } else {
+            res.status(500).json({ error: 'Error Interno del Servidor' });
+        }
+    }
+});
+
 
 
 
