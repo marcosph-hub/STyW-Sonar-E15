@@ -40,7 +40,6 @@ export default defineComponent({
     })
     const selectMethod = async (method: MethodStudy) => {
         try {
-
             const userID = new Types.ObjectId(userIDString)
             alert(`Has seleccionado el método: ${method.name}`)
             await preferencesStore.addUserPreferences(userID, method._id)
