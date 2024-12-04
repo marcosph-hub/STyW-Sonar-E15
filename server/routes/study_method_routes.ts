@@ -2,8 +2,7 @@ import { Request, Response } from "express";
 import StudyMethodModel from "../models/studyMethodModel";
 import UserPreferencesModel from "../models/userPreferencesModel";
 import User from "../models/user_model";
-import mongoose from "mongoose";
-
+import { Types } from "mongoose";
 const express = require("express");
 const router = express.Router();
 
@@ -71,8 +70,8 @@ router.get("/preferences/:userId", async (req: Request, res: Response) => {
     try {
         const { userId } = req.params;
         const preferences = await UserPreferencesModel.findOne({ userId })
-            .populate('userId')
-            .populate('methodId');
+            .populate('userId', '_id')
+            .populate('methodId', '_id name workDuration breakDuration'); // encapsulamiento de datos para mandar al front
         
         if (!preferences) {
             return res.status(404).json({ error: 'Preferencias no encontradas' });
@@ -89,21 +88,24 @@ router.get("/preferences/:userId", async (req: Request, res: Response) => {
 
 router.post("/preferences", async (req: Request, res: Response) => {
     try {
-        const { userId, methodId, workDuration, breakDuration } = req.body;
+        const { userId, methodId } = req.body;
+        const methodObjectId = new Types.ObjectId(methodId);
 
         const userExists = await User.findById(userId);
         if (!userExists) {
             return res.status(404).json({ error: 'Usuario no encontrado' });
         }
 
-        const methodExists = await StudyMethodModel.findById(methodId);
+        const methodExists = await StudyMethodModel.findById(methodObjectId);
         if (!methodExists) {
             return res.status(404).json({ error: 'Método de estudio no encontrado' });
         }
 
+        const { workDuration, breakDuration } = methodExists;
+
         const newPreferences = new UserPreferencesModel({
             userId,
-            methodId,
+            methodId: methodObjectId,
             workDuration,
             breakDuration
         });
@@ -112,7 +114,7 @@ router.post("/preferences", async (req: Request, res: Response) => {
         
         const populatedPreferences = await UserPreferencesModel.findById(savedPreferences._id)
             .populate('userId')
-            .populate('methodId');
+            .populate('methodId', '_id name workDuration breakDuration');
 
         res.status(201).json(populatedPreferences);
     } catch (error) {
@@ -123,6 +125,28 @@ router.post("/preferences", async (req: Request, res: Response) => {
         }
     }
 });
+
+router.delete("/preferences/:userId", async (req: Request, res: Response) => {
+    try {
+        const { userId } = req.params;
+
+        const userPreferences = await UserPreferencesModel.findOneAndDelete({ userId });
+
+        if (!userPreferences) {
+            return res.status(404).json({ error: 'Preferencias de usuario no encontradas' });
+        }
+
+        res.status(200).json({ message: 'Preferencias de usuario eliminadas correctamente' });
+    } catch (error) {
+        if (error instanceof Error) {
+            res.status(500).json({ error: error.message });
+        } else {
+            res.status(500).json({ error: 'Error Interno del Servidor' });
+        }
+    }
+});
+
+
 
 export default router;
 
