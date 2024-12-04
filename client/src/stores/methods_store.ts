@@ -3,7 +3,7 @@ import axios from 'axios';
 import type { MethodStudyInterfaces } from '@/models/methodstudy_model';
 import { MethodStudy } from '@/models/methodstudy_model';
 import { ref, computed } from 'vue';
-// import { Types } from 'mongoose';
+
 
 export const useMethodsStore = defineStore('Methods',()=>{
     const methods = ref<MethodStudyInterfaces[]>([]);
@@ -16,9 +16,7 @@ export const useMethodsStore = defineStore('Methods',()=>{
         try {
             const apiUrl = import.meta.env.VUE_APP_API_URL || 'http://localhost:5300';
             const response = await axios.get<MethodStudyInterfaces[]>(`${apiUrl}/method`);
-            methods.value = response.data.map( (method) => new MethodStudy(method.name, method.description, method.workDuration, method.breakDuration, method._id)) // method._id?.toString() || ''
-            console.log("client");
-            console.log(methods.value);
+            methods.value = response.data.map( (method) => new MethodStudy(method.name, method.description, method.workDuration, method.breakDuration, method._id)) 
             error.value = null;
         }
         catch(err: unknown){
@@ -30,9 +28,3 @@ export const useMethodsStore = defineStore('Methods',()=>{
     }
     return { methods, errorMessage, getMethods }
 });
-// {
-//     "name": "52/17",
-//     "description": "Study method where you work without rest for 52 minutes and then rest for 17 minutes.",
-//     "workDuration": 52,
-//     "breakDuration": 17
-// }
