@@ -12,11 +12,11 @@ export const usePreferencesStore = defineStore('Preferences', () => {
         return error.value ? error.value : '';
     });
 
-    async function getUserPreferences(userID: Types.ObjectId){
+    async function getUserPreferences(userId: Types.ObjectId){
         try{
             
             const apiUrl = import.meta.env.VUE_APP_API_URL || 'http://localhost:5300';
-            const response = await axios.get<UserPreferencesInterface>(`${apiUrl}/method/preferences/${userID}`);
+            const response = await axios.get<UserPreferencesInterface>(`${apiUrl}/method/preferences/${userId}`);
             userPreferences.value = [
                 new UserPreferences(
                     response.data.userId,
@@ -28,7 +28,6 @@ export const usePreferencesStore = defineStore('Preferences', () => {
                     response.data._id
                 ),
             ];
-            console.log('userPreferences obtenidas: ', userPreferences.value);
             error.value = null;
         } catch (err: unknown) {
             if (axios.isAxiosError(err)) {
@@ -47,12 +46,13 @@ export const usePreferencesStore = defineStore('Preferences', () => {
     async function addUserPreferences(userId: Types.ObjectId, methodId: Types.ObjectId) {
         try {
             const apiUrl = import.meta.env.VUE_APP_API_URL || 'http://localhost:5300';
-            await axios.post(`${apiUrl}/method/preferences`, {
+            const response = await axios.post(`${apiUrl}/method/preferences`, {
                 userId,
                 methodId
             });
 
             error.value = null;
+            return response.data._id
         } catch (err: unknown) {
             if (axios.isAxiosError(err)) {
                 console.error('Axios error:', err.response?.data || err.message);
