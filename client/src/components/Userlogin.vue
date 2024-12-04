@@ -59,24 +59,16 @@ export default defineComponent({
 });
 </script>
 
-
-
-
-
-
 <style scoped>
-/* Estilo básico del cuerpo */
-
 .card {
-  width: 150%; /* Ocupará el 90% del contenedor */
-  max-width: 500px; /* No excederá los 500px */
+  width: 150%;
+  max-width: 500px;
   border-radius: 20px;
   border-color: #151B23;
   background-color: #1f2731;
-  margin: 0 auto; /* Centra horizontalmente */
+  margin: 0 auto;
 }
 
-/* Encabezado del formulario */
 h2 {
   font-size: 1.9rem;
   margin-bottom: 20px; 
@@ -92,11 +84,9 @@ form {
   padding: 2rem 1.5rem; 
   border: 1px solid #ddd;
   border-radius: 8px; 
-  background-color: #fff;
+  background-color: #353e49;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); 
 }
-
-
 
 form div {
   margin-bottom: 10px;
@@ -123,7 +113,6 @@ input {
   border-color: none;
   border-radius: 10px;
   font-size: 1rem;
-  /* background-color: #151B23; */
   background-color: #353e49;
   outline: none;
   border: none;
@@ -145,18 +134,17 @@ form input:focus {
   box-shadow: 0 0 5px #83af82
 }
 
-/* Campos de entrada */
 .form-group input {
-  width: 100%;            /* Ocupa todo el ancho del contenedor */
-  padding: 10px;          /* Espaciado interno */
-  font-size: 14px;        /* Tamaño de fuente */
-  border: 1px solid #ccc; /* Borde gris claro */
-  border-radius: 5px;     /* Bordes redondeados */
-  box-sizing: border-box; /* Incluye padding y border en el ancho */
+  width: 100%;
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
 }
 
 form button {
-  width: 100%; /* Ocupará todo el ancho del formulario */
+  width: 100%;
   padding: 10px;
   font-size: 1rem;
   background-color: #344E41; 
