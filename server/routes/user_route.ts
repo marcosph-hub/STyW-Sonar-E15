@@ -43,7 +43,7 @@ router.post("/register", async (req: Request, res: Response) => {
   } catch (error: unknown) {
     if (error instanceof Error) {
       console.error('Error:', error.message);
-      res.status(500).json({ error: 'Internal Server Error' });
+      res.status(500).json({ error: error.message });
     } else {
       res.status(500).json({ error: 'Internal Server Error' });
     }
@@ -68,7 +68,7 @@ router.post("/login", async (req: Request, res: Response) => {
     }
 
       const json = jwt.sign({email},SECRET_KEY,{ expiresIn: TOKEN_EXPIRATION})
-      res.status(200).json({token: json,email: reqUser?.email,name: reqUser?.name });
+      res.status(200).json({token: json,email: reqUser?.email,name: reqUser?.name, userID: reqUser?._id });
 
   } catch (error: unknown) {
     if (error instanceof Error) {
