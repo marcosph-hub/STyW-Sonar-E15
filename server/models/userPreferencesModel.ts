@@ -3,8 +3,8 @@ import { Schema, model, Types } from "mongoose";
 interface UserPreferencesInterface extends Document {
     userId: Types.ObjectId;
     methodId: Types.ObjectId;
-    workDuration?: number;
-    breakDuration?: number;
+    workDuration: number;
+    breakDuration: number;
     createdAt: Date;
     updatedAt: Date;
 }
