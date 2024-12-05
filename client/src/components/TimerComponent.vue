@@ -1,10 +1,16 @@
 <template>
     <div class="timer-component">
         <h1 class="timer-title">Timer</h1>
-        <p class="timer-display">{{ timeDisplay }}</p>
-        <button class="timer-button" @click="startTimer(workDuration, breakDuration)">Start</button>
-        <button class="timer-button" @click="pauseTimer">Pause</button>
-        <button class="timer-button" @click="stopTimer">Restart</button>
+        <div class="timer-visual">
+            
+
+            <p class="timer-display">{{ timeDisplay }}</p>
+        </div>
+        <div class="button-collections">
+            <button class="timer-button" @click="startTimer(workDuration, breakDuration)">START</button>
+            <button class="timer-button" @click="pauseTimer">PAUSE</button>
+            <button class="timer-button" @click="stopTimer">RESTART</button>
+        </div>
     </div>
 </template>
 
@@ -68,13 +74,56 @@ export default defineComponent({
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
 
+body {
+    background-color: #151B23;
+    margin: 0;
+    width: 100vw;
+    height: 100vh;
+    display:grid;
+    place-items: center;
+    overflow: hidden;
+}
+
+.timer-component {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.timer-component h1{
+    margin-bottom: 50px;
+    font-size: 4rem;
+}
+
+.timer-visual {
+    display: flex;  
+    align-items: center;
+    justify-content: center;
+    width: 350px;
+    height: 350px;
+    border: 6px solid rgb(18, 102, 102);
+    color: rgb(18, 102, 102);
+    border-radius: 50%;
+    font-family: monospace;
+    font-size: 4rem;
+}
+
+
+
 .timer-title {
     font-family: 'Lobster', cursive;
     font-size: 2rem;
 }
 
+.button-collections {
+    margin-top: 50px;
+}
 .timer-button {
-    width: 50px;
+    /* width: 100px;
+    height: 40px; */
+    margin: 0 20px;
+    padding: 20px 60px;
     font-size: 0.9rem;
     background-color: #4c7761; 
     color: white;

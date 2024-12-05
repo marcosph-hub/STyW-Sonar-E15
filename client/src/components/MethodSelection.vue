@@ -1,20 +1,23 @@
 <template>
-  <div class="method-selection">
+  <body> 
+    <div class="method-selection">
     <h2>Selecciona tu método de estudio</h2>
     <div class="methods">
-      <div v-for="method in methods" :key="method.name" class="method-card">
+      <div v-for="method in methods" :key="method.name" class="method-card"> 
         <h3>{{ method.name }}</h3>
         <p>{{ method.description }}</p>
         <p style="font-weight: bold">
           Tiempo de estudio: <span class="work-duration">{{ method.workDuration }}</span> minutos
-        </p>
+        </p> 
         <p style="font-weight: bold">
           Tiempo de descanso: <span class="break-duration">{{ method.breakDuration }}</span> minutos
         </p>
         <button @click="selectMethod(method)">Seleccionar</button>
       </div>
+      </div>
     </div>
-  </div>
+  </body>
+  
 </template>
 
 <script lang="ts">
@@ -24,7 +27,7 @@ import { defineComponent, onMounted } from 'vue'
 import { useAuthStore } from '@/stores/authstore'
 import { useUsersStore } from '@/stores/users_store'
 import { MethodStudy } from '@/models/methodstudy_model'
-import { useMethodsStore } from '@/stores/methods_store'
+import { useMethodsStore } from '@/stores/methods_store' 
 import { usePreferencesStore } from '@/stores/userPreferences_store'
 
 export default defineComponent({
@@ -34,7 +37,7 @@ export default defineComponent({
     const authStore = useAuthStore()
     const userStore = useUsersStore() 
     const methodsStore = useMethodsStore()
-    const userIDString = authStore.loggedUserId
+    const userIDString = authStore.loggedUserId 
     const preferencesStore = usePreferencesStore()
     onMounted(async () => { 
       await userStore.getUsers() 
