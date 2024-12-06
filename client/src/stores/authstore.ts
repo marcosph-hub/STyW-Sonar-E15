@@ -43,8 +43,9 @@ export const useAuthStore = defineStore('auth', {
               } else {
                 throw new Error("Error al iniciar sesión: El servidor no devolvió un token");
               }
-            } catch (error) {
+            } catch (error:any) {
               // Manejar errores del servidor o de conexión
+              
               if (error.response && error.response.data) {
                 throw new Error(error.response.data.message  || "Error en el servidor");
               } else {

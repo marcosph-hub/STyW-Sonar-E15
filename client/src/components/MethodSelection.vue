@@ -45,6 +45,12 @@ export default defineComponent({
     })
     const selectMethod = async (method: MethodStudy) => {
         try { 
+            if (!userIDString) {
+                throw new Error('No se ha encontrado el ID del usuario')
+            }
+            if (!method._id) {
+                throw new Error('No se ha encontrado el ID del método')
+            }
             const userID = new Types.ObjectId(userIDString)
             await preferencesStore.addUserPreferences(userID, method._id)
             router.push('/timer')
