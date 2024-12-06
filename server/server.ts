@@ -6,6 +6,7 @@ import dotenv from 'dotenv';
 import cors from 'cors';
 
 import methodRoutes from './routes/study_method_routes';
+import historyRoutes from './routes/history_routes';
 
 // Cargar las variables de entorno
 dotenv.config();
@@ -45,6 +46,7 @@ app.use(cors({
 app.use('/user',require("./routes/user_route"));
 app.use('/method', methodRoutes);
 app.use('/subject', require("./routes/subject_route"));
+app.use('/history', historyRoutes);
 
 const servers = app.listen(app.get("port"), () => {
   console.log(`Server running at http://localhost:` + app.get("port"));
