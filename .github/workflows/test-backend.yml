@@ -9,8 +9,16 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
-
+ services:
+      mongo:
+        image: mongo:latest
+        ports:
+          - 27017:27017
+        options: >-
+          --health-cmd="mongo --eval 'db.adminCommand(\"ping\").ok'" 
+          --health-interval=10s 
+          --health-timeout=5s 
+          --health-retries=5
     steps:
     # 1. Clonar el repositorio
     - name: Checkout repository
@@ -32,7 +40,14 @@ jobs:
     # 3. Instalar dependencias del frontend
     - name: Install dependencies main
       run: npm install
-
+      - name: Esperar a que Mongo esté listo
+        run: |
+          for i in {1..30}; do
+            nc -z localhost 27017 && echo "Mongo está listo" && exit 0
+            echo "Esperando a que Mongo esté listo..."
+            sleep 2
+          done
+          echo "Mongo no se pudo iniciar" && exit 1
     # 4. Compilar el proyecto Vue
     - name: Test run
       working-directory: ./server  # Apunta a la carpeta client

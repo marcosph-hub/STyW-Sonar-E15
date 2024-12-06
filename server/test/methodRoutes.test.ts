@@ -4,7 +4,7 @@ import request from 'supertest';
 import express from 'express';
 import StudyMethodModel from '../models/studyMethodModel';
 import UserPreferencesModel from '../models/userPreferencesModel';
-
+import User from '../models/user_model';
 
 const app = express();
 app.use(express.json());
@@ -27,6 +27,7 @@ describe('Rutas de Métodos de Estudio y Preferencias', () => {
     afterEach(async () => {
         await StudyMethodModel.deleteMany({});
         await UserPreferencesModel.deleteMany({});
+        await User.deleteMany({email: 'juan@juan.com'});
     });
 
     describe('GET /method', () => {
@@ -96,10 +97,16 @@ describe('Rutas de Métodos de Estudio y Preferencias', () => {
                 name: 'Pomodoro',
                 description: 'Técnica de gestión de tiempo'
             });
+            const usuario = await User.create({
+                name: 'Juan',
+                email: 'juan@juan.com',
+                password: '123456',
+                role: 'student'
+            });
 
             const nuevasPreferencias = {
-                email: 'test@test.com',
-                preferedMethod: metodo._id,
+                userId: usuario._id,
+                methodId: metodo._id,
                 customSettings: {
                     workDuration: 25,
                     breakDuration: 5
@@ -112,7 +119,6 @@ describe('Rutas de Métodos de Estudio y Preferencias', () => {
                 .expect(201);
 
             expect(response.body).toHaveProperty('_id');
-            expect(response.body.email).toBe(nuevasPreferencias.email);
         });
 
         test('debe obtener preferencias de usuario por email', async () => {
@@ -120,10 +126,16 @@ describe('Rutas de Métodos de Estudio y Preferencias', () => {
                 name: 'Pomodoro',
                 description: 'Técnica de gestión de tiempo'
             });
+            const usuario = await User.create({
+                name: 'Juan',
+                email: 'juan@juan.com',
+                password: '123456',
+                role: 'student'
+            });
 
-            await UserPreferencesModel.create({
-                email: 'test@test.com',
-                preferedMethod: metodo._id,
+            const preferedMethod = await UserPreferencesModel.create({
+                userId: usuario._id,
+                methodId: metodo._id,
                 customSettings: {
                     workDuration: 25,
                     breakDuration: 5
@@ -131,11 +143,9 @@ describe('Rutas de Métodos de Estudio y Preferencias', () => {
             });
 
             const response = await request(app)
-                .get('/method/preferences/test@test.com')
-                .expect(200);
-
-            expect(response.body).toHaveProperty('email', 'test@test.com');
-            expect(response.body).toHaveProperty('preferedMethod');
+                .get('/method/preferences/' + preferedMethod.userId).expect(200);
+            expect(response.body).toHaveProperty('_id');
+            expect(response.body).toHaveProperty('userId');
             expect(response.body.customSettings).toHaveProperty('workDuration', 25);
         });
     });
