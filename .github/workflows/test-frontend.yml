@@ -10,6 +10,8 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+
+
     steps:
       # 1. Clonar el repositorio
       - name: Checkout repository
@@ -23,28 +25,43 @@ jobs:
           node-version: 20
 
 
-      # 2. Instalar dependencias del proyecto raíz
+      # 3. Instalar dependencias del proyecto raíz
       - name: Install root dependencies
         run: npm install
 
-      # 3. Instalar dependencias del backend
+
+      # 4. Instalar dependencias del backend
       - name: Install backend dependencies
         working-directory: ./server
         run: npm install
-      # 3. Instalar dependencias del frontend
-      - name: Install backend dependencies
+
+
+      # 5. Instalar dependencias del frontend
+      - name: Install frontend dependencies
         working-directory: ./client
         run: npm install
-      #4. Ejecutar front y backend
+
+
+      # 6. Ejecutar front y backend
       - name: Run tests
         run: npm run dev
-        env: 
-             ATLAS_URI: mongodb+srv://admin_Atlas:sytw@cluster0.opsd0.mongodb.net/clientStudyProject?retryWrites=true&w=majority
-             SECRET_KEY: sytw
-            TOKEN_EXPIRATION: 30m
-      # 5. Esperar a que la app esté lista
-      - name: Wait for services 
+        env:
+          ATLAS_URI: mongodb+srv://admin_Atlas:sytw@cluster0.opsd0.mongodb.net/clientStudyProject?retryWrites=true&w=majority
+          SECRET_KEY: sytw
+          TOKEN_EXPIRATION: 30m
+
+
+      # 7. Esperar a que la app esté lista
+      - name: Wait for services
         run: npx wait-on http://localhost:5173 http://localhost:5300
-      # 6. Ejecutar pruebas Cypress 
-      - name: Run Cypress tests 
-      run: npx cypress run
+
+
+      # 8. Ejecutar pruebas Cypress
+      - name: Run Cypress tests
+        run: npx cypress run
+
+
+
+
+
+
