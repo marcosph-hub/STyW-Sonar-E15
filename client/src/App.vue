@@ -12,11 +12,10 @@ import { RouterView } from 'vue-router'
       <RouterLink class="link-success link-underline-opacity-0" to="/users">Users</RouterLink>
     </nav> -->
   </header>
-   <main>
+  <main>
     <div id="Mostrar titulo"></div>
-    <RouterView />
-   </main>
-   
+  <RouterView />
+  </main>
 </template>
 
 <style scoped>

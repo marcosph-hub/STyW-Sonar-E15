@@ -1,28 +1,33 @@
-import mongoose, { Schema, Document} from 'mongoose';
+import mongoose, { Schema, Document } from "mongoose";
 
 interface StudyMethodInterface extends Document {
-    name:string;
-    description:string;
-    defaultSettings: {
-        workDuration:number;
-        breakDuration:number;
-    };
+    name: string;
+    description: string;
+    workDuration: number;
+    breakDuration: number;
 }
 
-const StudyMethodSchema = new Schema ({
-    name:{
+const StudyMethodSchema = new Schema({
+    name: {
         type: String,
-        required: true
+        required: true,
     },
     description: {
         type: String,
-        required: true
+        required: true,
     },
-    defaultSettings: {
-        workDuration: Number,
-        breakDuration: Number
+    workDuration:{
+        type: Number,
+        required: true,
+    },
+    breakDuration:{
+        type: Number,
+        required: true,
     }
-});
+    });
 
-const StudyMethodModel = mongoose.model<StudyMethodInterface>('StudyMethodModel', StudyMethodSchema);
+    const StudyMethodModel = mongoose.model<StudyMethodInterface>(
+    "StudyMethodModel",
+    StudyMethodSchema
+);
 export default StudyMethodModel;
