@@ -51,7 +51,9 @@ jobs:
 
       # 7. Ejecutar pruebas Cypress
       - name: Run Cypress tests
+        working-directory: ./client
         run: npx cypress run
+
 
 
 
