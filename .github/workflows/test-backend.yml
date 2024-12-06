@@ -1,45 +1,54 @@
 name: Deploy Test Backend
 
+
 on:
   push:
     branches:
-      - dev  # Ejecutar cuando haya un push en la rama main
+      - dev  # Ejecutar cuando haya un push en la rama dev
 
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
- services:
+
+
+    services:
       mongo:
         image: mongo:latest
         ports:
           - 27017:27017
         options: >-
-          --health-cmd="mongo --eval 'db.adminCommand(\"ping\").ok'" 
-          --health-interval=10s 
-          --health-timeout=5s 
+          --health-cmd="mongo --eval 'db.adminCommand(\"ping\").ok'"
+          --health-interval=10s
+          --health-timeout=5s
           --health-retries=5
+
+
     steps:
-    # 1. Clonar el repositorio
-    - name: Checkout repository
-      uses: actions/checkout@v3
+      # 1. Clonar el repositorio
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
 
-    # 2. Configurar Node.js
-    - name: Set up Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: 20
+      # 2. Configurar Node.js
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
 
 
-    # 3. Instalar dependencias del frontend
-    - name: Install dependencies
-      working-directory: ./server   
-      run: npm install
+      # 3. Instalar dependencias del backend
+      - name: Install backend dependencies
+        working-directory: ./server
+        run: npm install
 
-    # 3. Instalar dependencias del frontend
-    - name: Install dependencies main
-      run: npm install
+
+      # 4. Instalar dependencias del proyecto raíz
+      - name: Install root dependencies
+        run: npm install
+
+
+      # 5. Esperar a que Mongo esté listo
       - name: Esperar a que Mongo esté listo
         run: |
           for i in {1..30}; do
@@ -48,8 +57,15 @@ jobs:
             sleep 2
           done
           echo "Mongo no se pudo iniciar" && exit 1
-    # 4. Compilar el proyecto Vue
-    - name: Test run
-      working-directory: ./server  # Apunta a la carpeta client
-      run: npm run test
+
+
+      # 6. Ejecutar tests
+      - name: Run tests
+        working-directory: ./server
+        run: npm run test
+
+
+
+
+
 
