@@ -1,28 +1,6 @@
 <template>
   <header class="menu-bar">
     <div class="menu-container">
-<<<<<<< HEAD:client/src/components/NavbarMenu.vue
-      <nav class="menu"> 
-          <ul> 
-            <li><img src="./../assets/SM_logo.png" alt="Method Study Logo" class="logo" /></li>
-            <li><h1 class="logo-text">Method Study</h1></li>
-            <li><router-link to="/">Inicio</router-link></li>
-            <li><router-link to="/about">Acerca de </router-link></li>
-            <li><a href="#contacto">Contacto</a></li> 
-            <div class="auth-buttons"> 
-              <ul>                
-                <li><button @click="handleLogin">Iniciar Sesión</button> </li>
-                <li><button @click="handleRegister">Registrarse</button></li> 
-              </ul>
-            </div>
-            <RouterLink 
-              v-if="authStore.isAuthenticated" 
-              to="/select-method"
-              class="nav-link"
-            >
-              Seleccionar Método
-            </RouterLink>
-=======
       <nav class="menu">
         <ul>
           <li><img src="./../assets/SM_logo.png" alt="Method Study Logo" class="logo" /></li>
@@ -48,35 +26,18 @@
               </li>
             </ul>
           </div>
->>>>>>> 911f4d94b74ee778b5053f01767c706741f9ba61:client/src/components/Navbar.vue
         </ul>
       </nav>
     </div>
   </header>
 </template>
-<<<<<<< HEAD:client/src/components/NavbarMenu.vue
-<script setup lang="ts">
-import { useRouter } from 'vue-router';
-import { useAuthStore } from '@/stores/authstore';
-
-const router = useRouter();
-const authStore = useAuthStore();
-
-const handleLogin = () => {
-  router.push("/login");
-};
-
-const handleRegister = () => {
-  router.push("/register");
-};
-=======
 <script lang="ts">
 import { defineComponent } from 'vue'
 import { useAuthStore } from '@/stores/authstore' // Tu store de autenticación
 import { useRouter } from 'vue-router'
 
 export default defineComponent({
-  name: 'Navbar',
+  name: 'NavbarMenu',
   setup() {
     const auth = useAuthStore() // Accede al store de autenticación
     const router = useRouter() // Router para navegar entre vistas
@@ -102,7 +63,6 @@ export default defineComponent({
     }
   },
 })
->>>>>>> 911f4d94b74ee778b5053f01767c706741f9ba61:client/src/components/Navbar.vue
 </script>
 
 <style scoped>
