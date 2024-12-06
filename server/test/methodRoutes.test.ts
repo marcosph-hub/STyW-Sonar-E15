@@ -33,8 +33,8 @@ describe('Rutas de Métodos de Estudio y Preferencias', () => {
     describe('GET /method', () => {
         test('debe obtener todos los métodos de estudio', async () => {
             await StudyMethodModel.create([
-                { name: 'Pomodoro', description: 'Técnica de gestión de tiempo' },
-                { name: 'Flashcards', description: 'Método de memorización' }
+                { name: 'Pomodoro', description: 'Técnica de gestión de tiempo',workDuration: 25, breakDuration: 5 },
+                { name: 'Flashcards', description: 'Método de memorización' ,workDuration: 15, breakDuration: 5}
             ]);
 
             const response = await request(app)
@@ -64,7 +64,9 @@ describe('Rutas de Métodos de Estudio y Preferencias', () => {
         test('debe crear un nuevo método de estudio', async () => {
             const nuevoMetodo = {
                 name: 'Método Cornell',
-                description: 'Sistema para tomar notas'
+                description: 'Sistema para tomar notas',
+                workDuration: 25,
+                breakDuration: 5
             };
 
             const response = await request(app)
@@ -95,7 +97,9 @@ describe('Rutas de Métodos de Estudio y Preferencias', () => {
         test('debe crear preferencias de usuario', async () => {
             const metodo = await StudyMethodModel.create({
                 name: 'Pomodoro',
-                description: 'Técnica de gestión de tiempo'
+                description: 'Técnica de gestión de tiempo',
+                workDuration: 25,
+                breakDuration: 5
             });
             const usuario = await User.create({
                 name: 'Juan',
@@ -107,10 +111,9 @@ describe('Rutas de Métodos de Estudio y Preferencias', () => {
             const nuevasPreferencias = {
                 userId: usuario._id,
                 methodId: metodo._id,
-                customSettings: {
                     workDuration: 25,
                     breakDuration: 5
-                }
+                
             };
 
             const response = await request(app)
@@ -124,7 +127,10 @@ describe('Rutas de Métodos de Estudio y Preferencias', () => {
         test('debe obtener preferencias de usuario por email', async () => {
             const metodo = await StudyMethodModel.create({
                 name: 'Pomodoro',
-                description: 'Técnica de gestión de tiempo'
+                description: 'Técnica de gestión de tiempo',
+                workDuration: 25,
+                breakDuration: 5
+                
             });
             const usuario = await User.create({
                 name: 'Juan',
@@ -136,17 +142,16 @@ describe('Rutas de Métodos de Estudio y Preferencias', () => {
             const preferedMethod = await UserPreferencesModel.create({
                 userId: usuario._id,
                 methodId: metodo._id,
-                customSettings: {
                     workDuration: 25,
                     breakDuration: 5
-                }
+                
             });
 
             const response = await request(app)
                 .get('/method/preferences/' + preferedMethod.userId).expect(200);
             expect(response.body).toHaveProperty('_id');
             expect(response.body).toHaveProperty('userId');
-            expect(response.body.customSettings).toHaveProperty('workDuration', 25);
+            expect(response.body).toHaveProperty('workDuration', 25);
         });
     });
 });

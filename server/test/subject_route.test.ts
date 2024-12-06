@@ -11,6 +11,7 @@ dotenv.config();
 describe('Probando la api rest de subjects',() =>{
     afterAll(async ()=>{
         await mongoose.connection.close(true);
+        await mongoose.disconnect();
         servers.close();
     })
     afterEach(async () =>{
@@ -18,7 +19,7 @@ describe('Probando la api rest de subjects',() =>{
         jest.clearAllMocks();
     })
     beforeAll(async () =>{
-        await mongoose.connection.close();
+        await mongoose.disconnect();
         await mongoose.connect('mongodb://localhost:27017/testdb');
     })
   test('test GET subjects' ,async() =>{
