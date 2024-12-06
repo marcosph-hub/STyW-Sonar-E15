@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import Navbar  from "@/components/Navbar.vue"
+import NavbarMenu from "@/components/NavbarMenu.vue"
 </script>
 <template>
     <main>
-        <Navbar />
+        <NavbarMenu />
         <div>
             <TimerComponent />
         </div>

@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import MethodSelection from '@/components/MethodSelection.vue'
-import Navbar from '@/components/Navbar.vue'
+import NavbarMenu from '@/components/NavbarMenu.vue'
 </script>   
 
 <template>
     <main>
-        <Navbar />
+        <NavbarMenu />
         <MethodSelection />
     </main>
 </template>
