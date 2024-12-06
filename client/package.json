@@ -21,7 +21,8 @@
     "mongoose": "^8.8.1",
     "pinia": "^2.2.6",
     "vue": "^3.5.12",
-    "vue-router": "^4.4.5"
+    "vue-router": "^4.4.5",
+    "wait-on": "^8.0.1"
   },
   "devDependencies": {
     "@cypress/vue": "^6.0.1",
