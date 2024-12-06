@@ -49,12 +49,7 @@ jobs:
           TOKEN_EXPIRATION: 30m
 
 
-      # 7. Esperar a que la app esté lista
-      - name: Wait for services
-        run: npx wait-on http://localhost:5173 http://localhost:5300
-
-
-      # 8. Ejecutar pruebas Cypress
+      # 7. Ejecutar pruebas Cypress
       - name: Run Cypress tests
         run: npx cypress run
 
