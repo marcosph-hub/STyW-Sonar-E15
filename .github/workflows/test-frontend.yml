@@ -42,7 +42,7 @@ jobs:
 
       # 6. Ejecutar front y backend
       - name: Run tests
-        run: npm run dev
+        run: npm run dev &
         env:
           ATLAS_URI: mongodb+srv://admin_Atlas:sytw@cluster0.opsd0.mongodb.net/clientStudyProject?retryWrites=true&w=majority
           SECRET_KEY: sytw
