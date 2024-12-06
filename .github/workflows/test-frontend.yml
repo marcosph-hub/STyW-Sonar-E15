@@ -10,8 +10,6 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
-
     steps:
       # 1. Clonar el repositorio
       - name: Checkout repository
@@ -59,8 +57,6 @@ jobs:
       # 8. Ejecutar pruebas Cypress
       - name: Run Cypress tests
         run: npx cypress run
-
-
 
 
 
