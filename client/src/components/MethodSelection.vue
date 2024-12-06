@@ -56,6 +56,7 @@ export default defineComponent({
             router.push('/timer')
         } catch (error) {
             console.error('Error al seleccionar el método', error)
+            alert(error)
         }
     }
     return {
