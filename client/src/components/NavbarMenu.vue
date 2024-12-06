@@ -14,26 +14,32 @@
                 <li><button @click="handleRegister">Registrarse</button></li> 
               </ul>
             </div>
+            <RouterLink 
+              v-if="authStore.isAuthenticated" 
+              to="/select-method"
+              class="nav-link"
+            >
+              Seleccionar Método
+            </RouterLink>
         </ul>
       </nav>
 
     </div>
   </header>
 </template>
-<script lang="ts">
+<script setup lang="ts">
+import { useRouter } from 'vue-router';
+import { useAuthStore } from '@/stores/authstore';
 
-export default {
-  name: "NavBar",
-  methods:{
-      handleLogin() {
-    // Aquí puedes redirigir al formulario de inicio de sesión
-    this.$router.push("/login");
-  },
-  handleRegister() {
-    // Aquí puedes redirigir al formulario de registro
-    this.$router.push("/register");
-  }
-  }
+const router = useRouter();
+const authStore = useAuthStore();
+
+const handleLogin = () => {
+  router.push("/login");
+};
+
+const handleRegister = () => {
+  router.push("/register");
 };
 </script>
 

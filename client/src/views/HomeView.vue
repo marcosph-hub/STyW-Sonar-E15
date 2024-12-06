@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import Navbar from "@/components/Navbar.vue"
+import NavbarMenu from "@/components/NavbarMenu.vue"
 import { ref, onMounted } from 'vue'; 
 const show = ref(false); 
 // Inicialmente está oculto 
@@ -11,7 +11,7 @@ onMounted(() =>
 
 <template>
 <header>
-  <Navbar/>
+  <NavbarMenu/>
 </header>
   <main>
 

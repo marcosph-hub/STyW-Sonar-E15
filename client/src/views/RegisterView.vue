@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import Navbar from "@/components/Navbar.vue"
+import NavbarMenu from "@/components/NavbarMenu.vue"
 import RegisterUser from "@/components/Register_User.vue"
 </script>
 
 <template>
     <main>
         <div>
-            <Navbar />
+            <NavbarMenu />
             <RegisterUser />
         </div>
     </main>

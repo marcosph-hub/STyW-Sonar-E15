@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import Navbar from "@/components/Navbar.vue"
+import NavbarMenu from "@/components/NavbarMenu.vue"
 import Userlogin from "@/components/Userlogin.vue";
 
 </script>
@@ -7,7 +7,7 @@ import Userlogin from "@/components/Userlogin.vue";
 
 <template>
 <header>
-  <Navbar/>
+  <NavbarMenu/>
 </header>
   <main>
     <Userlogin/>

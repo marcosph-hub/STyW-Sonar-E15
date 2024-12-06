@@ -4,6 +4,7 @@ import HomeView from '../views/HomeView.vue'
 import UserList from '@/components/UserList.vue'
 import RegisterUser from '@/views/RegisterView.vue'
 import Loginview from '@/views/LoginView.vue'
+// import StudyMethodSelector from '@/components/StudyMethodSelector.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -32,7 +33,13 @@ const router = createRouter({
       path: '/login',
       name: 'UserLogin',
       component: Loginview
-    }
+    },
+    // {
+    //   path: '/method',
+    //   name: 'selectMethod',
+    //   component: StudyMethodSelector,
+    //   meta: { requiresAuth: true }
+    // }
   ],
 })
 
