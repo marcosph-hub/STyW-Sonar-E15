@@ -5,7 +5,7 @@
     <div class="methods">
       <div v-for="method in methods" :key="method.name" class="method-card"> 
         <h3>{{ method.name }}</h3>
-        <p>{{ method.description }}</p> 
+        <p>{{ method.description }}</p>
         <p style="font-weight: bold">
           Tiempo de estudio: <span class="work-duration">{{ method.workDuration }}</span> minutos
         </p> 
