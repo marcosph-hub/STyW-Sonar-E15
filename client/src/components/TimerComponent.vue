@@ -29,6 +29,9 @@ export default defineComponent({
         const authStore = useAuthStore();
         const preferencesStore = usePreferencesStore();
         const userIDString = authStore.loggedUserId
+        if (!userIDString) {
+            throw new Error('No se ha encontrado el ID del usuario')
+        }
         const userID = new Types.ObjectId(userIDString)
         const timeDisplay = computed(() => timerStore.timeDisplay)
         const workDuration = ref(0);

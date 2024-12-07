@@ -25,10 +25,9 @@ describe('UserPreferences Model Test', () => {
             const validUserPreferences = {
                 userId: new mongoose.Types.ObjectId(),
                 methodId: new mongoose.Types.ObjectId(),
-                customSettings: {
                     workDuration: 25,
                     breakDuration: 5
-                }
+                
             };
 
             const userPreferences = new UserPreferencesModel(validUserPreferences);
@@ -37,8 +36,8 @@ describe('UserPreferences Model Test', () => {
             expect(savedUserPreferences._id).toBeDefined();
             expect(savedUserPreferences.userId).toEqual(validUserPreferences.userId);
             expect(savedUserPreferences.methodId).toEqual(validUserPreferences.methodId);
-            expect(savedUserPreferences.customSettings?.workDuration).toBe(25);
-            expect(savedUserPreferences.customSettings?.breakDuration).toBe(5);
+            expect(savedUserPreferences.workDuration).toBe(25);
+            expect(savedUserPreferences.breakDuration).toBe(5);
         });
 
         test('debe fallar al crear preferencias sin userId', async () => {
@@ -59,10 +58,9 @@ describe('UserPreferences Model Test', () => {
         test('debe fallar al crear preferencias sin methodId', async () => {
             const userPreferencesWithoutMethodId = {
                 userId: new mongoose.Types.ObjectId(),
-                customSettings: {
                     workDuration: 25,
                     breakDuration: 5
-                }
+                
             };
 
             try {
@@ -83,7 +81,6 @@ describe('UserPreferences Model Test', () => {
             const savedUserPreferences = await userPreferences.save();
             
             expect(savedUserPreferences._id).toBeDefined();
-            expect(savedUserPreferences.customSettings).toEqual({});
         });
     });
 });
