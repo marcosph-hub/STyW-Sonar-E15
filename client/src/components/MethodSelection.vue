@@ -43,7 +43,7 @@ export default defineComponent({
       await userStore.getUsers() 
       await methodsStore.getMethods()
     })
-    const selectMethod = async (method: MethodStudy) => {
+    const selectMethod = async (method: MethodStudy) => { 
         try { 
             const userID = new Types.ObjectId(userIDString)
             await preferencesStore.addUserPreferences(userID, method._id)
