@@ -7,9 +7,9 @@
             <p class="timer-display">{{ timeDisplay }}</p>
         </div>
         <div class="button-collections">
-            <button class="timer-button" @click="startTimer(workDuration, breakDuration)">START</button>
-            <button class="timer-button" @click="pauseTimer">PAUSE</button>
-            <button class="timer-button" @click="stopTimer">RESTART</button>
+            <button class="timer-button-start" @click="startTimer(workDuration, breakDuration)">START</button>
+            <button class="timer-button-pause" @click="pauseTimer">PAUSE</button>
+            <button class="timer-button-stop" @click="stopTimer">RESTART</button>
         </div>
     </div>
 </template>
