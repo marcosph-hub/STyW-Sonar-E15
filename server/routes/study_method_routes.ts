@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import StudyMethodModel from "../models/studyMethodModel";
+import SubjectModel from "../models/subject_model";
 import UserPreferencesModel from "../models/userPreferencesModel";
 import User from "../models/user_model";
 import { Types } from "mongoose";
@@ -73,7 +74,8 @@ router.get("/preferences/:userId", async (req: Request, res: Response) => {
             .sort({ createdAt: -1 })
             .limit(1)
             .populate('userId', '_id')
-            .populate('methodId', '_id name workDuration breakDuration');
+            .populate('methodId', '_id name workDuration breakDuration')
+            .populate('subjectId', '_id name');
         
         if (!preferences || preferences.length === 0) {
             return res.status(404).json({ error: 'Preferencias no encontradas' });
@@ -92,7 +94,8 @@ router.get("/preferences", async (req: Request, res: Response) => {
     try {
         const preferences = await UserPreferencesModel.find()
             .populate('userId', '_id name email')
-            .populate('methodId', '_id name workDuration breakDuration');
+            .populate('methodId', '_id name workDuration breakDuration')
+            .populate('subjectId', '_id name');
 
         if (!preferences || preferences.length === 0) {
             return res.status(404).json({ error: 'No se encontraron preferencias' });
@@ -111,8 +114,9 @@ router.get("/preferences", async (req: Request, res: Response) => {
 
 router.post("/preferences", async (req: Request, res: Response) => {
     try {
-        const { userId, methodId } = req.body;
+        const { userId, methodId, subjectId } = req.body;
         const methodObjectId = new Types.ObjectId(methodId);
+        const subjectObjectId = new Types.ObjectId(subjectId);
 
         const userExists = await User.findById(userId);
         if (!userExists) {
@@ -124,11 +128,17 @@ router.post("/preferences", async (req: Request, res: Response) => {
             return res.status(404).json({ error: 'Método de estudio no encontrado' });
         }
 
+        const subjectExists = await SubjectModel.findById(subjectObjectId);
+        if (!subjectExists) {
+            return res.status(404).json({ error: 'Asignatura no encontrada' });
+        }
+
         const { workDuration, breakDuration } = methodExists;
 
         const newPreferences = new UserPreferencesModel({
             userId,
             methodId: methodObjectId,
+            subjectId: subjectObjectId,
             workDuration,
             breakDuration
         });
@@ -137,7 +147,8 @@ router.post("/preferences", async (req: Request, res: Response) => {
         
         const populatedPreferences = await UserPreferencesModel.findById(savedPreferences._id)
             .populate('userId')
-            .populate('methodId', '_id name workDuration breakDuration');
+            .populate('methodId', '_id name workDuration breakDuration')
+            .populate('subjectId', '_id name');
 
         res.status(201).json(populatedPreferences);
     } catch (error) {

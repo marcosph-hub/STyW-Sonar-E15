@@ -3,6 +3,7 @@ import { Schema, model, Types } from "mongoose";
 interface UserPreferencesInterface extends Document {
     userId: Types.ObjectId;
     methodId: Types.ObjectId;
+    subjectId: Types.ObjectId;
     workDuration: number;
     breakDuration: number;
     createdAt: Date;
@@ -18,6 +19,11 @@ const UserPreferencesSchema = new Schema<UserPreferencesInterface>({
     methodId: {
         type: Schema.Types.ObjectId,
         ref: 'StudyMethodModel',
+        required: true
+    },
+    subjectId: {
+        type: Schema.Types.ObjectId,
+        ref: 'Subject',
         required: true
     },
     workDuration: { type: Number },
