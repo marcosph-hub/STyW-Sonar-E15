@@ -9,11 +9,10 @@ export interface SubjectInterfaces  {
 
 /** class Subject */
 export class Subject implements SubjectInterfaces{
-     
     constructor(
       public name:string,
       public type_education: string,
       public description:string,
-      _id?:Types.ObjectId
+      public _id?:Types.ObjectId
     ) {}
 }
