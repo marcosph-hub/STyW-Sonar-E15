@@ -15,11 +15,21 @@ export const useSubjectStore = defineStore('Subject',()=>{
         const apiUrl = import.meta.env.VUE_APP_API_URL || 'http://localhost:5300'; 
         const response = await fetch(`${apiUrl}/subject`)
         const data = await response.json();
-        subjects.value= data.map((subject:SubjectInterfaces)=> new Subject(subject.name,subject.type_education,subject.description,subject._id))
+        subjects.value= data.map((subject:SubjectInterfaces)=> new Subject(subject.name, subject.description, subject._id))
     }
 
-    async function addSubject(subjectadd:SubjectInterfaces ) {
-        subjects.value.push(subjectadd)
+    async function addSubject(subjectadd: SubjectInterfaces) {
+        const apiUrl = import.meta.env.VUE_APP_API_URL || 'http://localhost:5300';
+        const response = await fetch(`${apiUrl}/subject`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(subjectadd)
+        });
+        const newSubject = await response.json();
+        subjects.value.push(newSubject);
+        return newSubject;
     }
 
     async function deleteSubject(id: Types.ObjectId) { 
