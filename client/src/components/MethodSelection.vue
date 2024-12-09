@@ -35,12 +35,13 @@ export default defineComponent({
     const router = useRouter()
     const authStore = useAuthStore()
     const userStore = useUsersStore()
-    const methodsStore = useMethodsStore()
+    const methodsStore = useMethodsStore() 
     const userIDString = authStore.loggedUserId
+    // const preferencesStore = usePreferencesStore()
 
     onMounted(async () => {
       await userStore.getUsers()
-      await methodsStore.getMethods()
+      await methodsStore.getMethods() 
     })
     const selectMethod = async (method: MethodStudy) => {
       try {
@@ -53,7 +54,7 @@ export default defineComponent({
         const userID = new Types.ObjectId(userIDString)
         sessionStorage.setItem('userID', userID.toString());
         sessionStorage.setItem('methodID', method._id.toString());
-        // await preferencesStore.addUserPreferences(userID, method._id)
+        
         router.push('/subject')
       } catch (error) {
         console.error('Error al seleccionar el método', error)
@@ -63,7 +64,6 @@ export default defineComponent({
     return {
       methods: methodsStore.methods,
       selectMethod,
-      // loading
     }
   },
 })
@@ -71,14 +71,6 @@ export default defineComponent({
 
 <style scoped>
 .method-selection {
-  /* text-align: center;
-  font-family: Arial, sans-serif;
-  width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 20px;
-  box-sizing: border-box;
-  padding: 20px */
   text-align: center;
   padding: 20px;
 }
