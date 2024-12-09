@@ -1,89 +1,111 @@
 <template>
-  <body> 
+  <body>
     <div class="method-selection">
-    <h2>Selecciona tu método de estudio</h2>
-    <div class="methods">
-      <div v-for="method in methods" :key="method.name" class="method-card"> 
-        <h3>{{ method.name }}</h3>
-        <p>{{ method.description }}</p>
-        <p style="font-weight: bold">
-          Tiempo de estudio: <span class="work-duration">{{ method.workDuration }}</span> minutos
-        </p> 
-        <p style="font-weight: bold">
-          Tiempo de descanso: <span class="break-duration">{{ method.breakDuration }}</span> minutos
-        </p>
-        <button @click="selectMethod(method)">Seleccionar</button>
-      </div>
+      <h2>Selecciona tu método de estudio</h2>
+      <div class="methods">
+        <div v-for="method in methods" :key="method.name" class="method-card">
+          <h3>{{ method.name }}</h3>
+          <p>{{ method.description }}</p>
+          <p style="font-weight: bold">
+            Tiempo de estudio: <span class="work-duration">{{ method.workDuration }}</span> minutos
+          </p>
+          <p style="font-weight: bold">
+            Tiempo de descanso:
+            <span class="break-duration">{{ method.breakDuration }}</span> minutos
+          </p>
+          <button @click="selectMethod(method)">Seleccionar</button>
+        </div>
       </div>
     </div>
   </body>
-  
 </template>
 
 <script lang="ts">
 import { Types } from 'mongoose'
 import { useRouter } from 'vue-router'
-import { defineComponent, onMounted } from 'vue'
+import { defineComponent, onMounted } from 'vue' 
 import { useAuthStore } from '@/stores/authstore'
 import { useUsersStore } from '@/stores/users_store'
 import { MethodStudy } from '@/models/methodstudy_model'
-import { useMethodsStore } from '@/stores/methods_store' 
-import { usePreferencesStore } from '@/stores/userPreferences_store'
+import { useMethodsStore } from '@/stores/methods_store'
 
 export default defineComponent({
   name: 'MethodSelection',
   setup() {
-    const router = useRouter() 
+    const router = useRouter()
     const authStore = useAuthStore()
-    const userStore = useUsersStore() 
+    const userStore = useUsersStore()
     const methodsStore = useMethodsStore()
-    const userIDString = authStore.loggedUserId 
-    const preferencesStore = usePreferencesStore()
-    onMounted(async () => { 
-      await userStore.getUsers() 
+    const userIDString = authStore.loggedUserId
+
+    onMounted(async () => {
+      await userStore.getUsers()
       await methodsStore.getMethods()
     })
     const selectMethod = async (method: MethodStudy) => {
-        try { 
-            if (!userIDString) {
-                throw new Error('No se ha encontrado el ID del usuario')
-            }
-            if (!method._id) {
-                throw new Error('No se ha encontrado el ID del método')
-            }
-            const userID = new Types.ObjectId(userIDString)
-            await preferencesStore.addUserPreferences(userID, method._id)
-            router.push('/timer')
-        } catch (error) {
-            console.error('Error al seleccionar el método', error)
-            alert(error)
+      try {
+        if (!userIDString) {
+          throw new Error('No se ha encontrado el ID del usuario')
         }
+        if (!method._id) {
+          throw new Error('No se ha encontrado el ID del método')
+        }
+        const userID = new Types.ObjectId(userIDString)
+        sessionStorage.setItem('userID', userID.toString());
+        sessionStorage.setItem('methodID', method._id.toString());
+        // await preferencesStore.addUserPreferences(userID, method._id)
+        router.push('/subject')
+      } catch (error) {
+        console.error('Error al seleccionar el método', error)
+        alert(error)
+      }
     }
     return {
-        methods: methodsStore.methods,
-        selectMethod
+      methods: methodsStore.methods,
+      selectMethod,
+      // loading
     }
-  }
+  },
 })
 </script>
 
 <style scoped>
 .method-selection {
-  text-align: center;
+  /* text-align: center;
   font-family: Arial, sans-serif;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  box-sizing: border-box;
+  padding: 20px */
+  text-align: center;
+  padding: 20px;
 }
 
 .methods {
   display: flex;
+  width: 100%;
   justify-content: space-around;
+  flex-wrap: wrap;
   margin-top: 20px;
+  gap: 20px;
+}
+
+.method-selection h2 {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  color: #12393b;
 }
 
 .method-card {
+  flex: 1 1 calc(25% - 20px);
+  max-width: 300px;
+  min-width: 100px;
   border: 1px solid #0a4f58;
   border-radius: 10px;
+  box-sizing: border-box;
   padding: 20px;
-  width: 30%;
   box-shadow: 0 4px 20px rgba(255, 255, 255, 0.1);
 }
 
