@@ -18,7 +18,7 @@
                 <button @click="handleLogin">Iniciar Sesión</button>
               </li>
               <li v-if="auth.isAuthenticated">
-                <button @click="handleLogout">Cerrar Sesión</button>
+                <button class='logout' @click="handleLogout">Cerrar Sesión</button>
               </li>
               <!-- Si el usuario no está autenticado -->
               <li v-else>

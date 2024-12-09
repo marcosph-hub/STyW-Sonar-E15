@@ -39,7 +39,7 @@ export default defineComponent({
         const methodName = ref('');
         onMounted(async () => {
             try {
-                await preferencesStore.getUserPreferences(userID);
+                //await preferencesStore.getUserPreferences(userID);
                 if (preferencesStore.userPreferences.length > 0) {
                     const preferences = preferencesStore.userPreferences[0];
                     workDuration.value = preferences.workDuration;

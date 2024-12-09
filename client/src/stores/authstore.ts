@@ -21,36 +21,32 @@ export const useAuthStore = defineStore('auth', {
         async login(email: string, password: string): Promise<void> {
             // Validar que email y password no estan vacíos
             if (!email || !password) {
-              throw new Error("Email y contraseña son requeridos");
+                throw new Error("Email y contraseña son requeridos");
             }
-      
             try {
               // Enviar solicitud al backend
-              const response = await axios.post('http://localhost:5300/user/login', { email, password });
-              this.token = response.data.token;
-              this.email = response.data.email; 
-              this.name = response.data.name;
-              const userId = response.data.userID;
-              sessionStorage.setItem('loggedUserId', userId);
-              if (this.token) {
-                this.isAuthenticated = true;
-      
-                // Guardar token en localStorage y configurar en Axios
-                localStorage.setItem('token', this.token);
-                //localStorage.setItem('loggedUserId', userId);
-                axios.defaults.headers.common['Authorization'] = `Bearer ${this.token}`;
-                return;
-              } else {
-                throw new Error("Error al iniciar sesión: El servidor no devolvió un token");
-              }
-            } catch (error:any ) {
-              // Manejar errores del servidor o de conexión
-              
-              if (error.response && error.response.data) {
-                throw new Error(error.response.data.message  || "Error en el servidor");
-              } else {
-                throw new Error(error.response.data.message  || "Error en el servidor desconodido");
-              }
+                const response = await axios.post('http://localhost:5300/user/login', { email, password });
+                this.token = response.data.token;
+                this.email = response.data.email; 
+                this.name = response.data.name;
+                const userId = response.data.userID;
+                sessionStorage.setItem('loggedUserId', userId);
+                if (this.token) {
+                    this.isAuthenticated = true;
+                    localStorage.setItem('token', this.token);
+                    axios.defaults.headers.common['Authorization'] = `Bearer ${this.token}`;
+                    return;
+                } else {
+                    throw new Error("Error al iniciar sesión: El servidor no devolvió un token");
+                }
+            } catch (error: Error | unknown) {
+                if (axios.isAxiosError(error) && error.response?.data) {
+                    throw new Error(error.response.data.message || "Error en el servidor");
+                } else if (error instanceof Error) {
+                    throw new Error(error.message || "Error desconocido");
+                } else {
+                    throw new Error("Error en el servidor desconocido");
+                }
             }
         },
 
@@ -76,7 +72,7 @@ export const useAuthStore = defineStore('auth', {
         isLoggedIn: (state) => state.isAuthenticated,
 
         loggedUserId: (): string | null => {
-          return sessionStorage.getItem('loggedUserId');
+            return sessionStorage.getItem('loggedUserId');
         }
     },
 });

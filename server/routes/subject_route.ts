@@ -29,10 +29,10 @@ router.get('/:id', async (req: Request, res: Response)=> {
     if (!subject) {
       res.status(404).send();
     }
-     else
-     res.status(200).send(subject);
-    } catch (error) {
-    res.status(500).send(error);
+    else
+      res.status(200).send(subject);
+  } catch (error) {
+      res.status(500).send(error);
   }
 });
 
@@ -40,7 +40,7 @@ router.put('/:id', async (req: Request, res: Response) => {
   try {
     const subject = await Subject.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true });
     if (!subject) {
-       res.status(404).send();
+      res.status(404).send();
     }
     else
     res.status(200).send(subject);
