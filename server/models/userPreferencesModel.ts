@@ -4,8 +4,8 @@ interface UserPreferencesInterface extends Document {
     userId: Types.ObjectId;
     methodId: Types.ObjectId;
     subjectId: Types.ObjectId;
-    workDuration: number;
-    breakDuration: number;
+    // workDuration: number;
+    // breakDuration: number;
     createdAt: Date;
     updatedAt: Date;
 }
@@ -24,10 +24,10 @@ const UserPreferencesSchema = new Schema<UserPreferencesInterface>({
     subjectId: {
         type: Schema.Types.ObjectId,
         ref: 'Subject',
-        required: true
+        required: false
     },
-    workDuration: { type: Number },
-    breakDuration: { type: Number }
+    // workDuration: { type: Number },
+    // breakDuration: { type: Number }
 }, {
     timestamps: true
 });

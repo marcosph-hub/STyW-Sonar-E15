@@ -1,9 +1,11 @@
 import mongoose, { Schema, Document } from 'mongoose';
+import { Types } from 'mongoose';
 
 interface SubjectInterface extends Document {
     name: string;
     //type_education: string;
     description:string;
+    _id:Types.ObjectId;
 }
 
 const SubjectSchema:Schema = new Schema({
@@ -13,14 +15,15 @@ const SubjectSchema:Schema = new Schema({
         minlength: [3, 'The minimum length is 3 characters'],
         maxlength: [20, 'The maximum length is 20 characters'],        
     },
-    // type_education:{
-    //     type:String,
-    //     required: [true, 'The type of education is required.'],
-    //     enum:['School','High School','University']
-    // },
     description:{
         type:String,
-        required: [true, 'Description is required.'],
+        required: [false, 'Description is required.'],
+        default:'no description'
+    },
+    _id:{
+        type:Schema.Types.ObjectId,
+        required:true,
+        default:()=>new Types.ObjectId()
     }
 })
 
