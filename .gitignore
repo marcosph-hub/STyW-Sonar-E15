@@ -135,3 +135,7 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+
+# Drawio files
+App_flow_chart.drawio
+
