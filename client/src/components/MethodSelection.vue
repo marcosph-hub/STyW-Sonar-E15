@@ -24,6 +24,7 @@
 import { Types } from 'mongoose'
 import { useRouter } from 'vue-router'
 import { defineComponent, onMounted } from 'vue'
+import { computed } from 'vue'
 import { useAuthStore } from '@/stores/authstore'
 import { useUsersStore } from '@/stores/users_store'
 import { MethodStudy } from '@/models/methodstudy_model'
@@ -39,11 +40,12 @@ export default defineComponent({
     const methodsStore = useMethodsStore()
     const userIDString = authStore.loggedUserId 
     const preferencesStore = usePreferencesStore()
+    const methods = computed(() => methodsStore.methods);
     onMounted(async () => { 
       await userStore.getUsers() 
       await methodsStore.getMethods()
     })
-    const selectMethod = async (method: MethodStudy) => {
+    const selectMethod = async (method: MethodStudy ) => {
         try { 
             if (!userIDString) {
                 throw new Error('No se ha encontrado el ID del usuario')
@@ -56,11 +58,10 @@ export default defineComponent({
             router.push('/timer')
         } catch (error) {
             console.error('Error al seleccionar el método', error)
-            alert(error)
         }
     }
     return {
-        methods: methodsStore.methods,
+        methods,
         selectMethod
     }
   }
