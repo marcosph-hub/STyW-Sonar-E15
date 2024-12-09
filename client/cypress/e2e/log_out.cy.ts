@@ -7,7 +7,7 @@ describe('Test de Integración - Log out', () => {
     });
   
   
-    it('Debe iniciar sesión correctamente', () => {
+    it('Debe cerrar sesión correctamente', () => {
         cy.get('input#email').type('juan@juan.com'); // Cambia el selector
         cy.get('input#password').type('juan');        
       cy.get('button[type="submit"]').click(); // Haz clic en el botón de login
