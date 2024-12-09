@@ -23,7 +23,7 @@
 <script lang="ts">
 import { Types } from 'mongoose'
 import { useRouter } from 'vue-router'
-import { defineComponent, onMounted } from 'vue' 
+import { defineComponent, onMounted, computed } from 'vue'  
 import { useAuthStore } from '@/stores/authstore'
 import { useUsersStore } from '@/stores/users_store'
 import { MethodStudy } from '@/models/methodstudy_model'
@@ -37,7 +37,7 @@ export default defineComponent({
     const userStore = useUsersStore()
     const methodsStore = useMethodsStore() 
     const userIDString = authStore.loggedUserId
-    // const preferencesStore = usePreferencesStore()
+    const methods = computed(() => methodsStore.methods);
 
     onMounted(async () => {
       await userStore.getUsers()
@@ -62,7 +62,7 @@ export default defineComponent({
       }
     }
     return {
-      methods: methodsStore.methods,
+      methods,
       selectMethod,
     }
   },
