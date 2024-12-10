@@ -12,8 +12,7 @@
 </template>
 
 <script lang="ts">
-// import { Types } from 'mongoose';
-import { defineComponent, /*onMounted,*/ ref } from 'vue';
+import { defineComponent, ref } from 'vue';
 import { useSubjectStore } from '@/stores/subjects_store';
 import { usePreferencesStore } from '@/stores/userPreferences_store';
 import { useRouter } from 'vue-router';

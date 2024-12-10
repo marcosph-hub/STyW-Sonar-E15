@@ -2,8 +2,6 @@
     <div class="timer-component">
         <h1 class="timer-title">Timer</h1>
         <div class="timer-visual">
-            
-
             <p class="timer-display">{{ timeDisplay }}</p>
         </div>
         <div class="button-collections">
@@ -25,10 +23,10 @@ import { Types } from 'mongoose'
 export default defineComponent({
     name: 'TimerComponent',
     setup() {
-        const timerStore = useTimerStore();
         const authStore = useAuthStore();
-        const preferencesStore = usePreferencesStore();
+        const timerStore = useTimerStore();
         const userIDString = authStore.loggedUserId
+        const preferencesStore = usePreferencesStore();
         if (!userIDString) {
             throw new Error('No se ha encontrado el ID del usuario')
         }
@@ -39,7 +37,8 @@ export default defineComponent({
         const methodName = ref('');
         onMounted(async () => {
             try {
-                //await preferencesStore.getUserPreferences(userID);
+                const preferences = await preferencesStore.getUserPreferences(userID);
+                console.log("preferences", preferences)
                 if (preferencesStore.userPreferences.length > 0) {
                     const preferences = preferencesStore.userPreferences[0];
                     workDuration.value = preferences.workDuration;
@@ -112,8 +111,6 @@ body {
     font-size: 4rem;
 }
 
-
-
 .timer-title {
     font-family: 'Lobster', cursive;
     font-size: 2rem;
@@ -122,9 +119,9 @@ body {
 .button-collections {
     margin-top: 50px;
 }
-.timer-button {
-    /* width: 100px;
-    height: 40px; */
+button {
+    width: 100px;
+    height: 40px; 
     margin: 0 20px;
     padding: 20px 60px;
     font-size: 0.9rem;

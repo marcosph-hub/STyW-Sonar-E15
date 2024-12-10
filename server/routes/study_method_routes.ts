@@ -76,7 +76,7 @@ router.get("/preferences/:userId", async (req: Request, res: Response) => {
             .limit(1)
             .populate('userId', '_id')
             .populate('methodId', '_id name workDuration breakDuration')
-            // .populate('subjectId', '_id name');
+            .populate('subjectId', '_id name');
         
         if (!preferences || preferences.length === 0) {
             return res.status(404).json({ error: 'Preferencias no encontradas' });
@@ -96,7 +96,7 @@ router.get("/preferences", async (req: Request, res: Response) => {
         const preferences = await UserPreferencesModel.find()
             .populate('userId', '_id name email')
             .populate('methodId', '_id name workDuration breakDuration')
-            // .populate('subjectId', '_id name');
+            .populate('subjectId', '_id name');
 
         if (!preferences || preferences.length === 0) {
             return res.status(404).json({ error: 'No se encontraron preferencias' });
@@ -129,7 +129,6 @@ router.post("/preferences", async (req: Request, res: Response) => {
         if (!methodExists) {
             return res.status(404).json({ error: 'Método de estudio no encontrado' });
         }
-
         const { workDuration, breakDuration } = methodExists;
 
         const newPreferences = new UserPreferencesModel({

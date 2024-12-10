@@ -62,4 +62,14 @@ router.delete('/:id', async (req: Request, res: Response) => {
   }
 });
 
+router.delete("/", async (req: Request, res: Response) => {
+    try {
+        await Subject.deleteMany({});
+
+        res.status(200).json({ message: 'Todas las materias han sido eliminadas correctamente' });
+    } catch (error) {
+        res.status(500).json({ error: 'Error Interno del Servidor' });
+    }
+});
+
 module.exports = router;
