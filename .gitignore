@@ -139,3 +139,4 @@ dist
 # Drawio files
 App_flow_chart.drawio
 
+*.png
