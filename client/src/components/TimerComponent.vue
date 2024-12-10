@@ -1,6 +1,6 @@
 <template>
     <div class="timer-component">
-        <h1 class="timer-title">Timer</h1>
+        <h2 class="timer-title">Study Time</h2>
         <div class="timer-visual">
             <p class="timer-display">{{ timeDisplay }}</p>
         </div>
@@ -74,7 +74,6 @@ export default defineComponent({
 </script>
 
 <style scoped>
-@import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
 
 body {
     background-color: #151B23;
@@ -93,7 +92,7 @@ body {
     justify-content: center;
 }
 
-.timer-component h1{
+.timer-component h2{
     margin-bottom: 50px;
     font-size: 4rem;
 }
@@ -112,33 +111,34 @@ body {
 }
 
 .timer-title {
-    font-family: 'Lobster', cursive;
+    font-family:Verdana, Geneva, Tahoma, sans-serif ;
     font-size: 2rem;
 }
 
 .button-collections {
     margin-top: 50px;
+    display: flex;
+    justify-content: center;
 }
-button {
-    width: 100px;
-    height: 40px; 
-    margin: 0 20px;
-    padding: 20px 60px;
-    font-size: 0.9rem;
-    background-color: #4c7761; 
+
+.button-collections button {
+    width: 120px;
+    height: 50px;
+    margin: 0 10px;
+    padding: 10px 20px;
+    font-size: 1rem;
+    background-color: #4c7761;
     color: white;
     border: none;
     cursor: pointer;
-    transition: background-color 0.6s;
-    border-radius: 50px;
-    margin-right: 10px;
+    transition: background-color 0.3s, transform 0.3s;
+    border-radius: 25px;
 }
 
-button:hover  {
-    background-color: #344E41;
-    cursor: not-allowed;
-    border-color: #83af82;
-    box-shadow: 0px 0px 4px #79ac92;
+.button-collections button:hover {
+    background-color: #3d9669;
+    transform: scale(1.05);
+    cursor: pointer;
 }
 
 </style>
