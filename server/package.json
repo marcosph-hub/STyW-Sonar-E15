@@ -3,16 +3,16 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "jest --coverage",
+    "test": "jest --coverage --collectCoverageFrom='**/*.ts'",
     "dev": "nodemon --watch src --ext ts --exec ts-node ./server.ts",
     "start": "ts-node ./server"
   },
+  "type": "module",
   "keywords": [],
   "author": "",
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "@types/jest": "^29.5.14",
     "@types/node": "^22.10.1",
     "bcrypt": "^5.1.1",
     "bcryptjs": "^2.4.3",
@@ -28,7 +28,13 @@
     "nodemon": "^3.1.7"
   },
   "devDependencies": {
+    "@babel/preset-env": "^7.26.0",
     "@types/bcrypt": "^5.0.2",
-    "@types/supertest": "^6.0.2"
+    "@types/jest": "^29.5.14",
+    "@types/supertest": "^6.0.2",
+    "babel-jest": "^29.7.0",
+    "jest-coverage-badges": "^1.0.0",
+    "ts-jest": "^29.2.5",
+    "typescript": "^5.7.2"
   }
 }
