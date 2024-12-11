@@ -35,7 +35,6 @@ router.post("/register", async (req: Request, res: Response) => {
       name,
       role,
     });
-    console.log(new_user.password);
     await new_user.save();
     res.status(201).json({
       message: "User created successfully"
@@ -107,4 +106,4 @@ router.delete("/:id", async (req: Request, res: Response) => {
 });
 
 
-module.exports = router;
+export default router;
