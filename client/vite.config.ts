@@ -14,4 +14,10 @@ export default defineConfig({
     },
     extensions: ['.js', '.ts', '.vue'],
   },
+  test: {
+    coverage: {
+      reporter: ["text", "lcov"], // Habilita el reporte lcov
+      reportsDirectory: "./coverage", // Carpeta de salida
+    },
+  },
 })
