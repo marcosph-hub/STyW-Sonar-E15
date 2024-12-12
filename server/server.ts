@@ -6,9 +6,9 @@ import dotenv from 'dotenv';
 import cors from 'cors';
 
 import methodRoutes from './routes/study_method_routes';
-import historyRoutes from './routes/history_routes';
-import subjectRoutes from './routes/subject_route';
 import userRoutes from './routes/user_route'
+import historyRoutes from './routes/history_routes';
+import subjectRoutes from './routes/subject_route'
 
 // Cargar las variables de entorno
 dotenv.config();
@@ -45,7 +45,7 @@ app.use(cors({
 }));
 
 // Routes
-app.use('/user',userRoutes);
+app.use('/user', userRoutes);
 app.use('/method', methodRoutes);
 app.use('/subject', subjectRoutes);
 app.use('/history', historyRoutes);

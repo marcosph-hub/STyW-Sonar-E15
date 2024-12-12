@@ -165,5 +165,3 @@ describe('Rutas de Métodos de Estudio y Preferencias', () => {
         });
     });
 });
-
-
