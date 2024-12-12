@@ -6,7 +6,7 @@
     "strict": true,
     "module": "ESNext",
     "target": "ESNext",
-    
+    "moduleResolution": "node"
   },
   "include": [
     "**/*.ts"
