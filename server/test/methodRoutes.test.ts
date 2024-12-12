@@ -5,6 +5,7 @@ import express from 'express';
 import StudyMethodModel from '../models/studyMethodModel';
 import UserPreferencesModel from '../models/userPreferencesModel';
 import User from '../models/user_model';
+import Subject from '../models/subject_model';
 
 const app = express();
 app.use(express.json());
@@ -12,11 +13,14 @@ app.use('/method', require('../routes/study_method_routes').default);
 
 describe('Rutas de Métodos de Estudio y Preferencias', () => {
     let mongoServer: MongoMemoryServer;
+    jest.setTimeout(10000); 
 
     beforeAll(async () => {
         mongoServer = await MongoMemoryServer.create();
         const mongoUri = mongoServer.getUri();
-        await mongoose.connect(mongoUri);
+        if (mongoose.connection.readyState === 0) {
+            await mongoose.connect(mongoUri);
+        }
     });
 
     afterAll(async () => {
@@ -101,6 +105,12 @@ describe('Rutas de Métodos de Estudio y Preferencias', () => {
                 workDuration: 25,
                 breakDuration: 5
             });
+            
+            const subject = await Subject.create({
+                name: 'Matemáticas',
+                description: 'Descripción de matemáticas'
+            });
+
             const usuario = await User.create({
                 name: 'Juan',
                 email: 'juan@juan.com',
@@ -111,9 +121,9 @@ describe('Rutas de Métodos de Estudio y Preferencias', () => {
             const nuevasPreferencias = {
                 userId: usuario._id,
                 methodId: metodo._id,
-                    workDuration: 25,
-                    breakDuration: 5
-                
+                subjectId: subject._id,
+                workDuration: 25,
+                breakDuration: 5
             };
 
             const response = await request(app)
@@ -155,5 +165,3 @@ describe('Rutas de Métodos de Estudio y Preferencias', () => {
         });
     });
 });
-
-
