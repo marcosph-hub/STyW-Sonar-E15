@@ -3,7 +3,7 @@ import './commands';
 
 
 // Manejar errores globales en Cypress
-Cypress.on('uncaught:exception', (err, runnable) => {
+Cypress.on('uncaught:exception', (err) => {
   // Ignora errores no controlados específicos si no afectan las pruebas
   console.log('Error capturado:', err.message);
   return false; // Evita que el test falle

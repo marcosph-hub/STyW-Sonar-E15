@@ -14,18 +14,18 @@ export const useUsersStore = defineStore('User', () => {
 
   async function getUsers() {
     try {
-      const apiUrl = import.meta.env.VUE_APP_API_URL || 'http://localhost:5300';
-      const response = await axios.get<UsersInterfaces[]>(`${apiUrl}/user`);
-
-      user.value = response.data.map(
-        (user) => new User(user.name, user.email, user.password, user.role, user._id?.toString() || '')
-      );
-      error.value = null;
+        const apiUrl = import.meta.env.VUE_APP_API_URL || 'http://localhost:5300';
+        const response = await axios.get<UsersInterfaces[]>(`${apiUrl}/user`);
+        
+        user.value = response.data.map(
+            (user) => new User(user.name, user.email, user.password, user.role, user._id?.toString() || '')
+        );
+        error.value = null;
     } catch (err: unknown) {
-      if (err instanceof Error) {
-        console.error('Error:', err.message);
-        error.value = 'Error getting the list of users';
-      }
+        if (err instanceof Error) {
+            console.error('Error:', err.message);
+            error.value = 'Error getting the list of users';
+        }
     }
   }
 
