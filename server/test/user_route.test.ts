@@ -1,5 +1,6 @@
 const request = require('supertest')
 import {app,servers} from './../server'
+import { MongoMemoryServer } from 'mongodb-memory-server';
 import mongoose from 'mongoose'
 import User from './../models/user_model'
 import { Types } from 'mongoose'
@@ -8,6 +9,8 @@ let server:any;
 
 
 describe('Probando la api rest de users',() =>{
+  let mongoServer: MongoMemoryServer;
+
   afterAll(async ()=>{
     await mongoose.connection.close(true);
     await mongoose.disconnect();
@@ -18,10 +21,13 @@ describe('Probando la api rest de users',() =>{
     jest.clearAllMocks();
   })
   
-  beforeAll(async () =>{
-    await mongoose.disconnect();
-    await mongoose.connect('mongodb://localhost:27017/testdb');
-  })
+  beforeAll(async () => {
+    mongoServer = await MongoMemoryServer.create();
+    const mongoUri = mongoServer.getUri();
+    if (mongoose.connection.readyState === 0) {
+        await mongoose.connect(mongoUri);
+    }
+});
 
 
   test('test GET users' ,async() =>{
