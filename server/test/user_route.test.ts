@@ -3,30 +3,35 @@ import {app,servers} from './../server'
 import mongoose from 'mongoose'
 import User from './../models/user_model'
 import { Types } from 'mongoose'
+import { MongoMemoryServer } from 'mongodb-memory-server'
 
 let server:any;
 
 
 describe('Probando la api rest de users',() =>{
-  afterAll(async ()=>{
-    await mongoose.connection.close(true);
+  let mongoServer: MongoMemoryServer
+  afterAll(async () => {
     await mongoose.disconnect();
-    servers.close();
-  })
+    await mongoServer.stop();
+  });
+  
   afterEach(async () =>{
     await User.deleteMany({});
     jest.clearAllMocks();
   })
   
-  beforeAll(async () =>{
-    await mongoose.disconnect();
-    await mongoose.connect('mongodb://localhost:27017/testdb');
-  })
+  beforeAll(async () => {
+    mongoServer = await MongoMemoryServer.create();
+    const mongoUri = mongoServer.getUri();
+    if (mongoose.connection.readyState === 0) {
+        await mongoose.connect(mongoUri);
+    }
+});
 
 
   test('test GET users' ,async() =>{
     const response = await request(app).get('/user/')
-     expect(response.status).toBe(200)
+    expect(response.status).toBe(200)
   })
 
   test('test POST user', async () =>{
